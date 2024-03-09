@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    private const float EPSILON = 0.01f;
+    private const float EPSILON = 0.05f;
 
     public MobiusStrip mobiusStrip = new();
     public Player player = new();
@@ -15,11 +15,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         mobiusStrip.GenerateMobiusStrip(mobiusStrip.material, mobiusStrip.uResolution, mobiusStrip.vResolution);
-        player.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-        player.GameObject.transform.position = mobiusStrip.GetPosition(player.UPos, player.VPos);
-        player.GameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        player.GameObject.GetComponent<Renderer>().material.color = Color.red;
+        StartPlayer();
     }
 
     // Update is called once per frame
@@ -29,9 +25,18 @@ public class GameManager : MonoBehaviour
         {
             player.Inverted = !player.Inverted;
         }
-        player.VPos -= Mathf.Clamp(Input.GetAxis("Horizontal"), -1 + EPSILON, 1 - EPSILON) * Time.deltaTime * player.hspeed;
+        player.VPos += Input.GetAxis("Horizontal") * Time.deltaTime * player.hspeed;
+        player.VPos = Mathf.Clamp(player.VPos, -1 + EPSILON, 1 - EPSILON);
         player.UPos += Time.deltaTime * player.fspeed;
         UpdatePlayerPosition();
+    }
+
+    private void StartPlayer()
+    {
+        player.GameObject = GameObject.Find("Player");
+        player.GameObject.transform.position = mobiusStrip.GetPosition(player.UPos, player.VPos);
+        player.GameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        player.GameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
     private void UpdatePlayerPosition()

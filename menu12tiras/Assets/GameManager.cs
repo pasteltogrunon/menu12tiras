@@ -25,9 +25,13 @@ public class GameManager : MonoBehaviour
         {
             player.Inverted = !player.Inverted;
         }
-        player.VPos += Input.GetAxis("Horizontal") * Time.deltaTime * player.hspeed;
+    }
+
+    void FixedUpdate()
+    {
+        player.VPos += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * player.hspeed;
         player.VPos = Mathf.Clamp(player.VPos, -1 + EPSILON, 1 - EPSILON);
-        player.UPos += Time.deltaTime * player.fspeed;
+        player.UPos += Time.fixedDeltaTime * player.fspeed;
         UpdatePlayerPosition();
     }
 

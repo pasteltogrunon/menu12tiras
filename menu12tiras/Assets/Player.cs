@@ -12,10 +12,13 @@ public class Player
 
     private readonly float upos;
     private readonly float vpos;
+    private readonly float hpos;
     private readonly bool inverted;
 
     public float UPos { get; set; }
     public float VPos { get; set; }
+    public float HPos { get; set; }
     public bool Inverted { get; set; }
     public GameObject GameObject { get; set; }
+    
 }

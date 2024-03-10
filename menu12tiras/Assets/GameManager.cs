@@ -61,10 +61,9 @@ public class GameManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        player.VPos += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * player.hspeed;
+        player.UPos += Time.fixedDeltaTime * player.fspeed / mobiusStrip.radius;
+        player.VPos += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * player.hspeed * 0.2f * player.fspeed;
         player.VPos = Mathf.Clamp(player.VPos, -1 + EPSILON, 1 - EPSILON);
-        player.UPos += Time.fixedDeltaTime * player.fspeed;
-        player.UPos += Time.fixedDeltaTime * player.fspeed;
         UpdatePlayerPosition();
     }
 

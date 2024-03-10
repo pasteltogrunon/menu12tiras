@@ -62,8 +62,27 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         player.UPos += Time.fixedDeltaTime * player.fspeed / mobiusStrip.radius;
-        player.VPos += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * player.hspeed * 0.2f * player.fspeed;
-        player.VPos = Mathf.Clamp(player.VPos, -1 + EPSILON, 1 - EPSILON);
+
+        //VPos calculation
+        float hAxis = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
+        Debug.Log(hAxis);
+        player.VSpeed +=  hAxis * Time.fixedDeltaTime * player.hacceleration * player.fspeed;
+        if(hAxis == 0)
+        {
+            player.VSpeed *= (1 - player.hfriction);
+        }
+
+        player.VPos = Mathf.Clamp(player.VPos + player.VSpeed * Time.fixedDeltaTime, -1 + EPSILON, 1 - EPSILON);
+
+        if(player.VPos == -1 + EPSILON)
+        {
+            player.VSpeed = Mathf.Clamp(player.VSpeed, 0, player.hspeed);
+        }
+        else if(player.VPos == 1 - EPSILON)
+        {
+            player.VSpeed = Mathf.Clamp(player.VSpeed, -player.hspeed, 0);
+        }
+
         UpdatePlayerPosition();
     }
 

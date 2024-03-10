@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-    private const float EPSILON = 0.05f;
+    private const float EPSILON = 0.55f;
 
     public MobiusStripTwisted mobiusStrip = new();
     public Player player = new();
+    public Coin coin;
     public bool debug = false;
 
     // Start is called before the first frame update
@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     {
         mobiusStrip.GenerateMobiusStrip(mobiusStrip.material, mobiusStrip.uResolution, mobiusStrip.vResolution);
         StartPlayer();
+        StartCoroutine(SpawnCoins()); 
     }
 
     // Update is called once per frame
@@ -53,7 +54,25 @@ public class GameManager : MonoBehaviour
         player.GameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
-    private void UpdatePlayerPosition()
+    public GameObject coinPre;
+  
+    IEnumerator SpawnCoins()
+    {
+        while(true)
+        {
+            int CoinIndex = Random.Range(-1, 2);
+            for (int i = 0; i < 3; i++) 
+            {
+                GameObject temp = Instantiate(coinPre);
+                temp.transform.position = mobiusStrip.GetPosition(player.UPos + 0.3f + i*0.05f, CoinIndex) + new Vector3(0, 0.7f, 0);
+            }                     
+            yield return new WaitForSeconds(4f);
+        }
+        
+    }
+
+
+        private void UpdatePlayerPosition()
     {
         Vector3 currentPoint = mobiusStrip.GetPosition(player.UPos, player.VPos);
         Vector3 normal = mobiusStrip.Normal(player.UPos, player.VPos);

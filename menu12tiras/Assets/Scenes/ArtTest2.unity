@@ -472,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489309537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505943, y: 0.000000014764631, z: -0.0000000020125426, w: 0.9908375}
+  m_LocalRotation: {x: 0.13505943, y: -0.000000014764631, z: 0.0000000020125426, w: 0.9908375}
   m_LocalPosition: {x: 0, y: 0.4, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -701,8 +701,10 @@ MonoBehaviour:
     hResolution: 1
     separation: 20
   player:
-    fspeed: 1
-    hspeed: 1
+    fspeed: 10
+    hspeed: 1.5
+    hacceleration: 2
+    hfriction: 0.3
   coin: {fileID: 0}
   debug: 0
   coinPre: {fileID: 8621012421368379915, guid: cd5a4d5ebe475d84f881f499a231f61d, type: 3}
@@ -886,7 +888,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677624422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505943, y: 0.000000014764631, z: -0.0000000020125426, w: 0.9908375}
+  m_LocalRotation: {x: 0.13505943, y: -0.000000014764631, z: 0.0000000020125426, w: 0.9908375}
   m_LocalPosition: {x: 0, y: 0.4, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

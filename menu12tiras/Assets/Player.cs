@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
     [Range(0, 10)] public float hspeed = 1f;
     [Range(0, 15)] public float hacceleration = 10f;
     [Range(0, 0.3f)] public float hfriction = 0.02f;
+    [Range(0, 10)] public float inversionCooldown = 4f;
+
+    [Header("Rayo Settings")]
+    public GameObject lookAtFollow;
 
     private const float EPSILON = GameManager.EPSILON;
 
@@ -15,13 +19,36 @@ public class Player : MonoBehaviour
     private float vpos;
     private float hpos;
     private bool inverted;
+    private bool inversionOnCooldown;
+    private float nextInversion;
 
     private float vspeed;
 
-    public float UPos { get; set; }
-    public float VPos { get; set; }
-    public float HPos { get; set; }
-    public bool Inverted { get; set; }
+    public float UPos
+    {
+        get => upos;
+        set => upos = value;
+    }
+    public float VPos
+    {
+        get => vpos;
+        set => vpos = value;
+    }
+    public float HPos
+    {
+        get => hpos;
+        set => hpos = value;
+    }
+    public bool Inverted
+    {
+        get => inverted;
+        set => inverted = value;
+    }
+    public bool InversionOnCooldown
+    {
+        get => inversionOnCooldown;
+        set => inversionOnCooldown = value;
+    }
     public GameObject GameObject { get; set; }
 
     public float VSpeed
@@ -41,6 +68,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        CheckInversionCooldown();
         CheckInversionState();
         CheckCrouchState();
     }
@@ -50,11 +78,26 @@ public class Player : MonoBehaviour
         UpdatePlayerPosition();
     }
 
+    private void CheckInversionCooldown()
+    {
+        if (inversionOnCooldown)
+        {
+            nextInversion -= Time.deltaTime;
+            inversionOnCooldown = nextInversion > 0;
+        }
+    }
+
     private void CheckInversionState()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            inverted = !inverted;
+            if (!inversionOnCooldown)
+            {
+                inverted = !inverted;
+
+                inversionOnCooldown = true;
+                nextInversion = inversionCooldown;
+            }
         }
     }
 
@@ -82,6 +125,8 @@ public class Player : MonoBehaviour
         Vector3 lookAt = GameManager.instance.GetMobiusStripLookAt(upos, vpos);
         Vector3 offset = hpos * (inverted ? -1 : 1) * normal;
         transform.SetPositionAndRotation(currentPoint + offset, Quaternion.LookRotation(lookAt, (inverted ? -1 : 1) * normal));
+
+        lookAtFollow.transform.SetPositionAndRotation(currentPoint + offset, Quaternion.LookRotation(lookAt, normal));
     }
 
     private void UpdateUPos()
@@ -98,7 +143,7 @@ public class Player : MonoBehaviour
             vspeed *= 1 - hfriction;
         }
 
-        vpos = Mathf.Clamp(vpos + (inverted ? -1 : 1) * vspeed * Time.fixedDeltaTime, -1 + EPSILON, 1 - EPSILON);
+        vpos = Mathf.Clamp(vpos + vspeed * Time.fixedDeltaTime, -1 + EPSILON, 1 - EPSILON);
 
         if (vpos == -1 + EPSILON)
         {

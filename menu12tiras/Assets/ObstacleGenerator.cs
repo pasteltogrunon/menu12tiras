@@ -68,20 +68,30 @@ public class ObstacleGenerator : MonoBehaviour
         public void InstantiateObject(List<GameObject> row, char type, float i, float j, float u, float ustep,
                                         float vstep, bool inverted = false)
         {
+            GameObject obstacle = null;
             switch (type)
             {
                 case 'o':
-                    GameObject obstacle = Instantiate(GameManager.instance.coin);
+                    obstacle = Instantiate(GameManager.instance.coin);
                     obstacle.GetComponent<Coin>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
                     row.Add(obstacle);
                     break;
                 case 'v':
-                    row.Add(null);
+                    break;
+                case 'x':
+                    obstacle = Instantiate(GameManager.instance.wall);
+                    obstacle.GetComponent<Obstacle>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
+                    row.Add(obstacle);
+                    break;
+                case '-':
+                    obstacle = Instantiate(GameManager.instance.slidingBar);
+                    obstacle.GetComponent<Obstacle>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
+                    row.Add(obstacle);
                     break;
                 default:
-                    row.Add(null);
                     break;
             }
+            row.Add(obstacle);
         }
 
         public void DestroyObjects()

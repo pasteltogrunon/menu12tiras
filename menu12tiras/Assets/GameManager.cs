@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private MobiusStrip mobiusStrip;
 
     public GameObject coin;
+    public GameObject wall;
+    public GameObject slidingBar;
     public bool debug = false;
 
     private void Awake()

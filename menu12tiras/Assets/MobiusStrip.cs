@@ -15,6 +15,7 @@ public abstract class MobiusStrip
 
     [Header("Mobius Strip Mesh")]
     public Material material;
+    public Material wallMaterial;
     public int uResolution;
     public int vResolution;
     public int hResolution;
@@ -93,7 +94,7 @@ public abstract class MobiusStrip
         bound.AddComponent<MeshRenderer>();
         bound.transform.position = Vector3.zero;
         bound.GetComponent<MeshFilter>().mesh = mesh;
-        bound.GetComponent<MeshRenderer>().material = material;
+        bound.GetComponent<MeshRenderer>().material = wallMaterial;
         bound.GetComponent<MeshRenderer>().material.color = Color.green;
 
         List<Vector3> vertices = new();
@@ -110,10 +111,10 @@ public abstract class MobiusStrip
         {
             while (h < 1)
             {
-                Vector3 p0 = GetPosition(u, boundPosition);
-                Vector3 p1 = GetPosition(u, boundPosition) + h * Normal(u, boundPosition);
-                Vector3 p2 = GetPosition(u + ustep, boundPosition) + h * Normal(u, boundPosition);
-                Vector3 p3 = GetPosition(u + ustep, boundPosition);
+                Vector3 p0 = GetPosition(u - EPSILON, boundPosition) - h * Normal(u, boundPosition);
+                Vector3 p1 = GetPosition(u - EPSILON, boundPosition) + h * Normal(u, boundPosition);
+                Vector3 p2 = GetPosition(u + ustep + EPSILON, boundPosition) + h * Normal(u, boundPosition);
+                Vector3 p3 = GetPosition(u + ustep + EPSILON, boundPosition) - h * Normal(u, boundPosition);
 
                 vertices.Add(p0);
                 vertices.Add(p1);

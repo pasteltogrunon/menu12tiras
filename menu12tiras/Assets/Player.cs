@@ -11,6 +11,11 @@ public class Player : MonoBehaviour
     [Range(0, 15)] public float hacceleration = 10f;
     [Range(0, 0.3f)] public float hfriction = 0.02f;
 
+    [Header("Speed FX")]
+    public AudioMixer mixer;
+    public VisualEffect speedLines;
+    public Camera camera;
+
     private const float EPSILON = GameManager.EPSILON;
 
     private float upos;
@@ -23,20 +28,30 @@ public class Player : MonoBehaviour
 
     private int coins;
 
-    public float UPos { get; set; }
-    public float VPos { get; set; }
-    public float HPos { get; set; }
+    public float UPos
+    {
+        get => upos;
+        set => upos = value;
+    }
+    public float VPos
+    {
+        get => vpos;
+        set => vpos = value;
+    }
+    public float HPos
+    {
+        get => hpos;
+        set => hpos = value;
+    }
     public bool Inverted
     {
         get => inverted;
         set => inverted = value;
     }
-    public GameObject GameObject { get; set; }
-
-    [Header("Speed FX")]
-    public AudioMixer mixer;
-    public VisualEffect speedLines;
-    public Camera camera;
+    public GameObject GameObject
+    {
+        get => gameObject;
+    }
 
     public float USpeed
     {
@@ -46,7 +61,7 @@ public class Player : MonoBehaviour
             mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
             mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
             mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
-            
+
             speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
 
             uspeed = value;

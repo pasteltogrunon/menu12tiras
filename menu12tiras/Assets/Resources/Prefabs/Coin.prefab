@@ -132,6 +132,9 @@ MonoBehaviour:
   rotationSpeed: 90
   scale: 1
   yratio: 1
+  activeCoinMaterial: {fileID: 2100000, guid: a9d7fd642a9ae6846b6ed30d7225f059, type: 2}
+  inactiveCoinMaterial: {fileID: 2100000, guid: 46df20908bdf855fe8a5372118bde6be,
+    type: 2}
 --- !u!65 &4605601834161772809
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class ObstacleGenerator : MonoBehaviour
 {
 
     public int nActiveSections = 10;
+    public float ustep = 0.1f;
     private List<ObstacleSection> obstacleSections;
 
     public class ObstacleSection
@@ -20,12 +21,18 @@ public class ObstacleGenerator : MonoBehaviour
         {
             get => u;
         }
+        private float ustep;
+        public float UStep
+        {
+            get => ustep;
+        }
         private Tuple<List<List<char>>, List<List<char>>> configuration;
         private Tuple<List<List<GameObject>>, List<List<GameObject>>> objects = new(new List<List<GameObject>>(), new List<List<GameObject>>());
 
-        public ObstacleSection(Tuple<List<List<char>>, List<List<char>>> configuration, float u)
+        public ObstacleSection(Tuple<List<List<char>>, List<List<char>>> configuration, float u, float ustep = 0.01f)
         {
             this.u = u;
+            this.ustep = ustep;
             this.configuration = configuration;
             nrows = configuration.Item1.Count;
         }
@@ -33,7 +40,6 @@ public class ObstacleGenerator : MonoBehaviour
         public void GenerateObjects()
         {
 
-            float ustep = 0.01f;
             float vstep1, vstep2;
 
             for (int i = 0; i < nrows; i++)
@@ -104,7 +110,7 @@ public class ObstacleGenerator : MonoBehaviour
         obstacleSections = new List<ObstacleSection>();
         for (int i = 0; i < nActiveSections; i++)
         {
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, i * 0.1f));
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, (i + 1) * ustep));
         }
         foreach (ObstacleSection section in obstacleSections)
         {
@@ -116,14 +122,20 @@ public class ObstacleGenerator : MonoBehaviour
     void Update()
     {
         float uplayer = GameObject.Find("Player").GetComponent<Player>().UPos;
-        float usection = obstacleSections[0].U + obstacleSections[0].NRows * 0.1f;
-        if (uplayer > usection)
+        float usectionFirst = obstacleSections[0].U + obstacleSections[0].NRows * obstacleSections[0].UStep;
+        float usectionLast = obstacleSections[^1].U + obstacleSections[^1].NRows * obstacleSections[^1].UStep;
+        for (int i = 0; i < obstacleSections.Count; i++)
         {
-            ObstacleSection section = obstacleSections[0];
+            Debug.Log("Section " + i + " u: " + obstacleSections[i].U);
+        }
+        Debug.Log("uplayer: " + uplayer + " usectionFirst: " + usectionFirst + " usectionLast: " + usectionLast);
+        if (uplayer > usectionFirst)
+        {
+            Debug.Log("Destroying first section");
+            obstacleSections[0].DestroyObjects();
             obstacleSections.RemoveAt(0);
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, usection + 0.01f));
-            section.DestroyObjects();
-            section.GenerateObjects();
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, usectionLast + ustep));
+            obstacleSections[^1].GenerateObjects();
         }
     }
 }

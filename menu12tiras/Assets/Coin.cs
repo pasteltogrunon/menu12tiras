@@ -7,9 +7,18 @@ public class Coin : MonoBehaviour
     public float yratio = 0.07f;
 
     private float u, v;
+    private bool inverted;
+
+    public Material activeCoinMaterial;
+    public Material inactiveCoinMaterial;
 
     public float U { get; set; }
     public float V { get; set; }
+    public bool Inverted
+    {
+        get => inverted;
+        set => inverted = value;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,7 +42,13 @@ public class Coin : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(GameManager.instance.GetMobiusStripNormal(u, v), rotationSpeed * Time.deltaTime);
+        transform.GetChild(0).Rotate(GameManager.instance.GetMobiusStripNormal(u, v), rotationSpeed * Time.deltaTime);
+        if (inverted == GameObject.Find("Player").GetComponent<Player>().Inverted)
+            transform.GetChild(0).GetComponent<MeshRenderer>().material = activeCoinMaterial;
+        else
+        {
+            transform.GetChild(0).GetComponent<MeshRenderer>().material = inactiveCoinMaterial;
+        }
     }
 
     public void Init(float u, float v, bool inverted = false)
@@ -41,6 +56,7 @@ public class Coin : MonoBehaviour
         name = $"Coin_{u}_{v}";
         this.u = u;
         this.v = v;
+        this.inverted = inverted;
         Vector3 position = GameManager.instance.GetMobiusStripPosition(u, v);
         Vector3 lookAt = GameManager.instance.GetMobiusStripLookAt(u, v);
         Vector3 normal = GameManager.instance.GetMobiusStripNormal(u, v);

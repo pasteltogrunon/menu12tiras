@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class MobiusStrip
+public abstract class MobiusStrip
 {
 
     private const float EPSILON = 0.01f;
 
     [Header("Mobius Strip Structure")]
-    [Range(0, 20)] public float radius;
-    [Range(0, 20)] public float width;
+    [Range(0, 80)] public float radius;
+    [Range(0, 40)] public float width;
     [Range(0, 5)] public float boundHeight;
     public Matrix4x4 axis;
 
@@ -143,14 +143,7 @@ public class MobiusStrip
         mesh.triangles = triangles.ToArray();
     }
 
-    public Vector3 GetPosition(float u, float v)
-    {
-        float x = (radius + v * width * Mathf.Cos(u / 2f)) * Mathf.Cos(u);
-        float y = (radius + v * width * Mathf.Cos(u / 2f)) * Mathf.Sin(u);
-        float z = v * Mathf.Sin(u / 2f);
-
-        return axis.MultiplyPoint(new Vector3(x, y, z));
-    }
+    public abstract Vector3 GetPosition(float u, float v);
 
     public Vector3 Normal(float u, float v)
     {

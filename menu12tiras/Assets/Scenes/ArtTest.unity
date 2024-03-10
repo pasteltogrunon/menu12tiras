@@ -457,8 +457,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobiusStrip:
-    radius: 15
-    width: 0.25
+    radius: 20
+    width: 1.2
     axis:
       e00: 0
       e01: 1
@@ -477,12 +477,12 @@ MonoBehaviour:
       e32: 0
       e33: 1
     material: {fileID: 2100000, guid: 5e8498260afb183e9a7f8bfbb31d75cc, type: 2}
-    uResolution: 100
-    vResolution: 100
+    uResolution: 300
+    vResolution: 20
   player:
     fspeed: 1
     hspeed: 1
-  debug: 0
+  debug: 1
 --- !u!4 &516727617
 Transform:
   m_ObjectHideFlags: 0

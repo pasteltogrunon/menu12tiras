@@ -10,25 +10,27 @@ public class MobiusStrip
     [Header("Mobius Strip Structure")]
     [Range(0, 20)] public float radius;
     [Range(0, 20)] public float width;
+    [Range(0, 5)] public float boundHeight;
     public Matrix4x4 axis;
 
     [Header("Mobius Strip Mesh")]
     public Material material;
     public int uResolution;
     public int vResolution;
+    public int hResolution;
 
 
     private GameObject strip;
-    private Mesh mesh;
+    private Mesh stripMesh;
 
-    public void GenerateMobiusStrip(Material material, int uResolution, int vResolution)
+    public void GenerateMobiusStrip()
     {
         strip = new GameObject("Mobius Strip");
         strip.AddComponent<MeshFilter>();
         strip.AddComponent<MeshRenderer>();
         strip.transform.position = Vector3.zero;
-        mesh = new Mesh();
-        strip.GetComponent<MeshFilter>().mesh = mesh;
+        stripMesh = new Mesh();
+        strip.GetComponent<MeshFilter>().mesh = stripMesh;
         strip.GetComponent<MeshRenderer>().material = material;
         strip.GetComponent<MeshRenderer>().material.color = Color.white;
 
@@ -74,6 +76,68 @@ public class MobiusStrip
             v += vstep;
         }
 
+        stripMesh.vertices = vertices.ToArray();
+        stripMesh.uv = uv.ToArray();
+        stripMesh.triangles = triangles.ToArray();
+
+        GenerateBound(-1);
+        GenerateBound(1);
+    }
+
+    public void GenerateBound(float boundPosition)
+    {
+        boundPosition = Mathf.Clamp(boundPosition, -1 + EPSILON, 1 - EPSILON);
+        GameObject bound = new($"Bound{boundPosition}");
+        Mesh mesh = new();
+        bound.AddComponent<MeshFilter>();
+        bound.AddComponent<MeshRenderer>();
+        bound.transform.position = Vector3.zero;
+        bound.GetComponent<MeshFilter>().mesh = mesh;
+        bound.GetComponent<MeshRenderer>().material = material;
+        bound.GetComponent<MeshRenderer>().material.color = Color.green;
+
+        List<Vector3> vertices = new();
+        List<Vector2> uv = new();
+        List<int> triangles = new();
+
+        float ustep = 2 * Mathf.PI / uResolution;
+        float hstep = 2f * boundHeight / hResolution;
+
+        float u = 0;
+        float h = -boundHeight;
+
+        while (u < 2 * Mathf.PI)
+        {
+            while (h < 1)
+            {
+                Vector3 p0 = GetPosition(u, boundPosition);
+                Vector3 p1 = GetPosition(u, boundPosition) + h * Normal(u, boundPosition);
+                Vector3 p2 = GetPosition(u + ustep, boundPosition) + h * Normal(u, boundPosition);
+                Vector3 p3 = GetPosition(u + ustep, boundPosition);
+
+                vertices.Add(p0);
+                vertices.Add(p1);
+                vertices.Add(p2);
+                vertices.Add(p3);
+
+                uv.Add(new Vector2(u / (2 * Mathf.PI), 0));
+                uv.Add(new Vector2(u / (2 * Mathf.PI), h / 2 + 0.5f));
+                uv.Add(new Vector2((u + ustep) / (2 * Mathf.PI), h / 2 + 0.5f));
+                uv.Add(new Vector2((u + ustep) / (2 * Mathf.PI), 0));
+
+                triangles.Add(vertices.Count - 4);
+                triangles.Add(vertices.Count - 3);
+                triangles.Add(vertices.Count - 2);
+                triangles.Add(vertices.Count - 4);
+                triangles.Add(vertices.Count - 2);
+                triangles.Add(vertices.Count - 1);
+
+                h += hstep;
+            }
+            h = -boundHeight;
+            u += ustep;
+        }
+
         mesh.vertices = vertices.ToArray();
         mesh.uv = uv.ToArray();
         mesh.triangles = triangles.ToArray();
@@ -81,7 +145,6 @@ public class MobiusStrip
 
     public Vector3 GetPosition(float u, float v)
     {
-        v = Mathf.Clamp(v, -1 + EPSILON, 1 - EPSILON);
         float x = (radius + v * width * Mathf.Cos(u / 2f)) * Mathf.Cos(u);
         float y = (radius + v * width * Mathf.Cos(u / 2f)) * Mathf.Sin(u);
         float z = v * Mathf.Sin(u / 2f);

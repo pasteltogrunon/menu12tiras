@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 [System.Serializable]
 public class Player : MonoBehaviour
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
     private float hpos;
     private bool inverted;
 
+    private float uspeed;
     private float vspeed;
 
     private int coins;
@@ -29,6 +31,21 @@ public class Player : MonoBehaviour
         set => inverted = value;
     }
     public GameObject GameObject { get; set; }
+
+    public AudioMixer mixer;
+
+    public float USpeed
+    {
+        get => uspeed;
+        set
+        {
+            mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
+            mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
+            mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
+
+            uspeed = value;
+        }
+    }
 
     public float VSpeed
     {
@@ -102,7 +119,9 @@ public class Player : MonoBehaviour
 
     private void UpdateUPos()
     {
-        upos += Time.fixedDeltaTime * fspeed / GameManager.instance.GetMobiusStripRadius();
+        if (Input.GetKey(KeyCode.W)) USpeed += 3 * Time.fixedDeltaTime;
+        if (Input.GetKey(KeyCode.S)) USpeed -= 3 * Time.fixedDeltaTime;
+        upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 
     private void UpdateVPos()

@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Morbius
-  m_Shader: {fileID: -6465566751694194690, guid: 8b1ae031a3128cc4aac5fe8557816d0c,
+  m_Name: MorbiusParticles2
+  m_Shader: {fileID: -6465566751694194690, guid: 4b04b2dbed793c143bffc3307efb563c,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -112,7 +112,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 0.2
+    - _Intensity: 0.5
     - _Maximum_Depth: 10000
     - _Metallic: 0
     - _Minimum_Depth: 4975

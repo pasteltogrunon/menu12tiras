@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MorbiusParticles
-  m_Shader: {fileID: -6465566751694194690, guid: 4b04b2dbed793c143bffc3307efb563c,
+  m_Shader: {fileID: -6465566751694194690, guid: 8b1ae031a3128cc4aac5fe8557816d0c,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -112,6 +112,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Intensity: 0.5
     - _Maximum_Depth: 10000
     - _Metallic: 0
     - _Minimum_Depth: 4975
@@ -123,12 +124,15 @@ Material:
     - _QueueOffset: 0
     - _Range: 0.1
     - _ReceiveShadows: 1
+    - _Remap: 0.7
+    - _Second: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _Voronoi_Scale: 5
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

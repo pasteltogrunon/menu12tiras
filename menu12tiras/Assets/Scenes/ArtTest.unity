@@ -472,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489309537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505942, y: 3.2956665e-16, z: -1.5377674e-16, w: 0.9908375}
+  m_LocalRotation: {x: 0.1350594, y: -0.000000018250086, z: 0.0000000024876385, w: 0.9908375}
   m_LocalPosition: {x: 0, y: 0.4, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a196b8b979e1c30a6354b194af6084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobiusStripType: 0
+  mobiusStripType: 1
   mobiusStripDefault:
     radius: 80
     width: 5
@@ -700,9 +700,8 @@ MonoBehaviour:
   player:
     fspeed: 1
     hspeed: 1
-  coin: {fileID: 0}
+  coin: {fileID: 8621012421368379915, guid: cd5a4d5ebe475d84f881f499a231f61d, type: 3}
   debug: 0
-  coinPre: {fileID: 8621012421368379915, guid: cd5a4d5ebe475d84f881f499a231f61d, type: 3}
 --- !u!4 &516727617
 Transform:
   m_ObjectHideFlags: 0
@@ -883,7 +882,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677624422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505942, y: 3.2956665e-16, z: -1.5377674e-16, w: 0.9908375}
+  m_LocalRotation: {x: 0.1350594, y: -0.000000018250086, z: 0.0000000024876385, w: 0.9908375}
   m_LocalPosition: {x: 0, y: 0.4, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

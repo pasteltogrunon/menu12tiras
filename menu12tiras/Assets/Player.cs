@@ -7,7 +7,6 @@ public class Player
     [Range(0, 10)] public float fspeed = 1f;
     [Range(0, 10)] public float hspeed = 1f;
 
-    [Header("Player Object")]
     private readonly GameObject gameObject;
 
     private readonly float upos;
@@ -20,5 +19,5 @@ public class Player
     public float HPos { get; set; }
     public bool Inverted { get; set; }
     public GameObject GameObject { get; set; }
-    
+
 }

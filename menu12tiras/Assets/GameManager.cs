@@ -11,13 +11,16 @@ public class GameManager : MonoBehaviour
         Twisted
     }
 
+    public static GameManager instance;
+
     private const float EPSILON = 0.05f;
     public MobiusStripType mobiusStripType;
     public MobiusStripDefault mobiusStripDefault = new();
     public MobiusStripTwisted mobiusStripTwisted = new();
     private MobiusStrip mobiusStrip;
     public Player player = new();
-    public Coin coin;
+
+    public GameObject coin;
     public bool debug = false;
 
     // Start is called before the first frame update
@@ -76,21 +79,20 @@ public class GameManager : MonoBehaviour
         player.GameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
-    public GameObject coinPre;
-
     IEnumerator SpawnCoins()
     {
         while (true)
         {
-            int CoinIndex = Random.Range(-1, 2);
+            int CoinIndex = 0;
+            //int CoinIndex = Random.Range(-1, 2);
             for (int i = 0; i < 3; i++)
             {
-                GameObject temp = Instantiate(coinPre);
-                float u = player.UPos + 0.3f + i * 0.05f;
-                Vector3 position = mobiusStrip.GetPosition(u, CoinIndex);
+                GameObject temp = Instantiate(coin);
+                float u = player.UPos + 0.3f + i * EPSILON;
+                Vector3 position = mobiusStrip.GetPosition(u, CoinIndex + (CoinIndex < 0 ? 1 : (CoinIndex > 0 ? -1 : 0)) * EPSILON * 10);
                 Vector3 lookAt = mobiusStrip.GetPosition(u, CoinIndex);
                 Vector3 normal = mobiusStrip.Normal(u, CoinIndex);
-                temp.transform.SetPositionAndRotation(position, Quaternion.LookRotation(lookAt, normal));
+                temp.transform.SetPositionAndRotation(position + 0.2f * normal, Quaternion.LookRotation(lookAt, normal));
             }
             yield return new WaitForSeconds(4f);
         }

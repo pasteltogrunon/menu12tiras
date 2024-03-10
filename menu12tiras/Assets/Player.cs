@@ -18,10 +18,16 @@ public class Player : MonoBehaviour
 
     private float vspeed;
 
+    private int coins;
+
     public float UPos { get; set; }
     public float VPos { get; set; }
     public float HPos { get; set; }
-    public bool Inverted { get; set; }
+    public bool Inverted
+    {
+        get => inverted;
+        set => inverted = value;
+    }
     public GameObject GameObject { get; set; }
 
     public float VSpeed
@@ -30,6 +36,16 @@ public class Player : MonoBehaviour
         set
         {
             vspeed = Mathf.Clamp(value, -hspeed * 0.2f * fspeed, hspeed * 0.2f * fspeed);
+        }
+    }
+
+    public int Coins
+    {
+        get => coins;
+        set
+        {
+            coins = value;
+            Debug.Log("Coins: " + coins);
         }
     }
 

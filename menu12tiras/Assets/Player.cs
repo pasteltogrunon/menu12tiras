@@ -18,19 +18,40 @@ public class Player : MonoBehaviour
     private float hpos;
     private bool inverted;
 
-    private float vspeed;
     private float uspeed;
+    private float vspeed;
+
+    private int coins;
 
     public float UPos { get; set; }
     public float VPos { get; set; }
     public float HPos { get; set; }
-    public bool Inverted { get; set; }
+    public bool Inverted
+    {
+        get => inverted;
+        set => inverted = value;
+    }
     public GameObject GameObject { get; set; }
 
     [Header("Speed FX")]
     public AudioMixer mixer;
     public VisualEffect speedLines;
     public Camera camera;
+
+    public float USpeed
+    {
+        get => uspeed;
+        set
+        {
+            mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
+            mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
+            mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
+            
+            speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
+
+            uspeed = value;
+        }
+    }
 
     public float VSpeed
     {
@@ -41,23 +62,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    public float USpeed
+    public int Coins
     {
-        get => uspeed;
+        get => coins;
         set
         {
-            mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
-            mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed -80, -100, 0));
-            mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
-
-            speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
-
-            camera.fieldOfView = Mathf.Clamp(5 * uspeed + 70, 70, 130);
-
-            uspeed = value;
+            coins = value;
+            Debug.Log("Coins: " + coins);
         }
     }
-
 
     private void Start()
     {

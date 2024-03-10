@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
         mobiusStrip.GenerateMobiusStrip();
-        StartCoroutine(SpawnCoins());
+        //StartCoroutine(SpawnCoins());
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator SpawnCoins()
+    /* IEnumerator SpawnCoins()
     {
         while (true)
         {
@@ -57,17 +57,13 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 GameObject temp = Instantiate(coin);
-                float u = 0;
-                //float u = player.UPos + 0.3f + i * EPSILON;
-                Vector3 position = mobiusStrip.GetPosition(u, CoinIndex + (CoinIndex < 0 ? 1 : (CoinIndex > 0 ? -1 : 0)) * EPSILON * 10);
-                Vector3 lookAt = mobiusStrip.GetPosition(u, CoinIndex);
-                Vector3 normal = mobiusStrip.Normal(u, CoinIndex);
-                temp.transform.SetPositionAndRotation(position + 0.2f * normal, Quaternion.LookRotation(lookAt, normal));
+                float u = GameObject.Find("Player").GetComponent<Player>().UPos + 0.3f + i * EPSILON;
+                float v = CoinIndex + (CoinIndex < 0 ? 1 : (CoinIndex > 0 ? -1 : 0)) * EPSILON * 10;
+                temp.GetComponent<Coin>().Init(u, v);
             }
             yield return new WaitForSeconds(4f);
         }
-
-    }
+    } */
 
     public Vector3 GetMobiusStripPosition(float u, float v)
     {

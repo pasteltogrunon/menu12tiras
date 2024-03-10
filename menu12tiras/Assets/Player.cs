@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.VFX;
 
 [System.Serializable]
 public class Player : MonoBehaviour
@@ -32,7 +33,10 @@ public class Player : MonoBehaviour
     }
     public GameObject GameObject { get; set; }
 
+    [Header("Speed FX")]
     public AudioMixer mixer;
+    public VisualEffect speedLines;
+    public Camera camera;
 
     public float USpeed
     {
@@ -42,6 +46,8 @@ public class Player : MonoBehaviour
             mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
             mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
             mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
+            
+            speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
 
             uspeed = value;
         }

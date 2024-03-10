@@ -5,14 +5,11 @@ using UnityEngine;
 public class MobiusStripTwisted : MobiusStrip
 {
 
-    private const float EPSILON = 0.01f;
-
     [Header("Mobius Strip Structure")]
     [Range(0, 20)] public float separation;
 
     public override Vector3 GetPosition(float u, float v)
     {
-        v = Mathf.Clamp(v, -1f + EPSILON, 1f - EPSILON);
         Vector2 FValue = Lemniscata(u);
         Vector2 GValue = LemniscataNormal(u);
         float x = FValue.x + v * width * Mathf.Cos(u / 2 - Mathf.PI / 4) * GValue.x;

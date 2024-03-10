@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public float turnSpeed = 90f;
+    public float rotationSpeed = 90f;
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // check if player touches coin
-        if (other.gameObject.name != "Player") 
+        if (other.gameObject.name != "Player")
         {
             return;
         }
@@ -21,11 +21,11 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
-        transform.Rotate(0, 0, turnSpeed * Time.deltaTime);
+        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }
 }

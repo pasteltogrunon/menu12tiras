@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     public AudioMixer mixer;
     public VisualEffect speedLines;
     public Camera camera;
+    [Range(0, 10)] public float inversionCooldown = 4f;
+
+    [Header("Rayo Settings")]
+    public GameObject lookAtFollow;
 
     private const float EPSILON = GameManager.EPSILON;
 
@@ -22,10 +26,11 @@ public class Player : MonoBehaviour
     private float vpos;
     private float hpos;
     private bool inverted;
+    private bool inversionOnCooldown;
+    private float nextInversion;
 
     private float uspeed;
     private float vspeed;
-
     private int coins;
 
     public float UPos
@@ -43,10 +48,16 @@ public class Player : MonoBehaviour
         get => hpos;
         set => hpos = value;
     }
+
     public bool Inverted
     {
         get => inverted;
         set => inverted = value;
+    }
+    public bool InversionOnCooldown
+    {
+        get => inversionOnCooldown;
+        set => inversionOnCooldown = value;
     }
     public GameObject GameObject
     {
@@ -95,6 +106,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        CheckInversionCooldown();
         CheckInversionState();
         CheckCrouchState();
     }
@@ -104,11 +116,26 @@ public class Player : MonoBehaviour
         UpdatePlayerPosition();
     }
 
+    private void CheckInversionCooldown()
+    {
+        if (inversionOnCooldown)
+        {
+            nextInversion -= Time.deltaTime;
+            inversionOnCooldown = nextInversion > 0;
+        }
+    }
+
     private void CheckInversionState()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            inverted = !inverted;
+            if (!inversionOnCooldown)
+            {
+                inverted = !inverted;
+
+                inversionOnCooldown = true;
+                nextInversion = inversionCooldown;
+            }
         }
     }
 
@@ -136,6 +163,8 @@ public class Player : MonoBehaviour
         Vector3 lookAt = GameManager.instance.GetMobiusStripLookAt(upos, vpos);
         Vector3 offset = hpos * (inverted ? -1 : 1) * normal;
         transform.SetPositionAndRotation(currentPoint + offset, Quaternion.LookRotation(lookAt, (inverted ? -1 : 1) * normal));
+
+        lookAtFollow.transform.SetPositionAndRotation(currentPoint + offset, Quaternion.LookRotation(lookAt, normal));
     }
 
     private void UpdateUPos()
@@ -154,7 +183,7 @@ public class Player : MonoBehaviour
             vspeed *= 1 - hfriction;
         }
 
-        vpos = Mathf.Clamp(vpos + (inverted ? -1 : 1) * vspeed * Time.fixedDeltaTime, -1 + EPSILON, 1 - EPSILON);
+        vpos = Mathf.Clamp(vpos + vspeed * Time.fixedDeltaTime, -1 + EPSILON, 1 - EPSILON);
 
         if (vpos == -1 + EPSILON)
         {

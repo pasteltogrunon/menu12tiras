@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private const float EPSILON = 0.55f;
 
-    public MobiusStripTwisted mobiusStrip = new();
+    public enum MobiusStripType
+    {
+        Default,
+        Twisted
+    }
+
+    private const float EPSILON = 0.05f;
+    public MobiusStripType mobiusStripType;
+    public MobiusStripDefault mobiusStripDefault = new();
+    public MobiusStripTwisted mobiusStripTwisted = new();
+    private MobiusStrip mobiusStrip;
     public Player player = new();
     public Coin coin;
     public bool debug = false;
@@ -14,9 +23,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        switch (mobiusStripType)
+        {
+            case MobiusStripType.Default:
+                mobiusStrip = mobiusStripDefault;
+                break;
+            case MobiusStripType.Twisted:
+                mobiusStrip = mobiusStripTwisted;
+                break;
+        }
         mobiusStrip.GenerateMobiusStrip(mobiusStrip.material, mobiusStrip.uResolution, mobiusStrip.vResolution);
         StartPlayer();
-        StartCoroutine(SpawnCoins()); 
+        StartCoroutine(SpawnCoins());
     }
 
     // Update is called once per frame
@@ -55,24 +73,28 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject coinPre;
-  
+
     IEnumerator SpawnCoins()
     {
-        while(true)
+        while (true)
         {
             int CoinIndex = Random.Range(-1, 2);
-            for (int i = 0; i < 3; i++) 
+            for (int i = 0; i < 3; i++)
             {
                 GameObject temp = Instantiate(coinPre);
-                temp.transform.position = mobiusStrip.GetPosition(player.UPos + 0.3f + i*0.05f, CoinIndex) + new Vector3(0, 0.7f, 0);
-            }                     
+                float u = player.UPos + 0.3f + i * 0.05f;
+                Vector3 position = mobiusStrip.GetPosition(u, CoinIndex);
+                Vector3 lookAt = mobiusStrip.GetPosition(u, CoinIndex);
+                Vector3 normal = mobiusStrip.Normal(u, CoinIndex);
+                temp.transform.SetPositionAndRotation(position, Quaternion.LookRotation(lookAt, normal));
+            }
             yield return new WaitForSeconds(4f);
         }
-        
+
     }
 
 
-        private void UpdatePlayerPosition()
+    private void UpdatePlayerPosition()
     {
         Vector3 currentPoint = mobiusStrip.GetPosition(player.UPos, player.VPos);
         Vector3 normal = mobiusStrip.Normal(player.UPos, player.VPos);

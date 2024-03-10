@@ -112,7 +112,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 0.5
+    - _Intensity: 0.3
     - _Maximum_Depth: 10000
     - _Metallic: 0
     - _Minimum_Depth: 4975

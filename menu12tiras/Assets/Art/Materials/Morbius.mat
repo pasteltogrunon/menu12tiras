@@ -112,10 +112,11 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Intensity: 0.2
     - _Maximum_Depth: 10000
     - _Metallic: 0
     - _Minimum_Depth: 4975
-    - _Noise_Size: 10
+    - _Noise_Size: 5
     - _OcclusionStrength: 1
     - _Offset: 0.3
     - _Parallax: 0.005
@@ -123,12 +124,15 @@ Material:
     - _QueueOffset: 0
     - _Range: 0.1
     - _ReceiveShadows: 1
+    - _Remap: 0.7
+    - _Second: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _Voronoi_Scale: 2
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

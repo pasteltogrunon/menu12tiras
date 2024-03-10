@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.VFX;
 
 [System.Serializable]
 public class Player : MonoBehaviour
@@ -22,7 +24,9 @@ public class Player : MonoBehaviour
     private bool inversionOnCooldown;
     private float nextInversion;
 
+    private float uspeed;
     private float vspeed;
+    private int coins;
 
     public float UPos
     {
@@ -51,12 +55,42 @@ public class Player : MonoBehaviour
     }
     public GameObject GameObject { get; set; }
 
+    [Header("Speed FX")]
+    public AudioMixer mixer;
+    public VisualEffect speedLines;
+    public Camera camera;
+
+    public float USpeed
+    {
+        get => uspeed;
+        set
+        {
+            mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
+            mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
+            mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
+            
+            speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
+
+            uspeed = value;
+        }
+    }
+
     public float VSpeed
     {
         get => vspeed;
         set
         {
             vspeed = Mathf.Clamp(value, -hspeed * 0.2f * fspeed, hspeed * 0.2f * fspeed);
+        }
+    }
+
+    public int Coins
+    {
+        get => coins;
+        set
+        {
+            coins = value;
+            Debug.Log("Coins: " + coins);
         }
     }
 
@@ -131,7 +165,9 @@ public class Player : MonoBehaviour
 
     private void UpdateUPos()
     {
-        upos += Time.fixedDeltaTime * fspeed / GameManager.instance.GetMobiusStripRadius();
+        if (Input.GetKey(KeyCode.W)) USpeed += 3 * Time.fixedDeltaTime;
+        if (Input.GetKey(KeyCode.S)) USpeed -= 3 * Time.fixedDeltaTime;
+        upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 
     private void UpdateVPos()

@@ -10,7 +10,7 @@ public class Die
 
         switch(number)
         {
-            /*case 1:
+            case 1:
                 player.Cervez(10);
                 break;
             case 2:
@@ -28,9 +28,9 @@ public class Die
             case 6:
                 player.Invinivilize(12);
                 break;
-                */
+                
             default:
-                player.USpeed *= 1.4f;break;
+                break;
         }
 
         return number;

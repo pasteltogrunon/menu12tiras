@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
         float t = Mathf.FloorToInt(GameManager.instance.TotalTime);
 
         float s = t % 60;
-        float m = (t-30) / 60;
+        float m = Mathf.Clamp((t-30) / 60, 0, 99999);
 
         Timer.text = string.Format("{0:000}:{1:00}.{2:000}", m, s, (GameManager.instance.TotalTime - t) * 1000);
 

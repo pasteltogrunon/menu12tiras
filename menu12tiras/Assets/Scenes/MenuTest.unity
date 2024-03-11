@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pal men\xFA"
+  m_text: Salir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
@@ -1386,8 +1386,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 475}
+  m_AnchoredPosition: {x: 0, y: -1}
+  m_SizeDelta: {x: 724.4, y: 394.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &201929639
 MonoBehaviour:
@@ -6365,7 +6365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11403,7 +11403,6 @@ Transform:
   m_Children:
   - {fileID: 48622084}
   - {fileID: 832195819}
-  - {fileID: 2023516675}
   m_Father: {fileID: 711504356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &303501696
@@ -21572,7 +21571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -26455,7 +26454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489309537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.60480714, y: -0.21903498, z: 0.69991446, w: -0.3104058}
+  m_LocalRotation: {x: 0.6048072, y: -0.219035, z: 0.6999145, w: -0.31040576}
   m_LocalPosition: {x: -0.4064201, y: -0.30732557, z: 79.65485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -26783,7 +26782,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -69.2}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &527146423
@@ -27066,14 +27065,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2099216811}
-  - {fileID: 1123044885}
-  - {fileID: 298228435}
   - {fileID: 394750818}
   - {fileID: 1139211716}
   - {fileID: 1920270305}
   - {fileID: 960450451}
   - {fileID: 199966176}
   - {fileID: 448258338}
+  - {fileID: 1123044885}
+  - {fileID: 298228435}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -32216,7 +32215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Le seguimo dando
+  m_text: Reanudar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
@@ -32324,6 +32323,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2023516675}
   - {fileID: 73057029}
   - {fileID: 1504533559}
   m_Father: {fileID: 298228435}
@@ -32331,7 +32331,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 450, y: 353.1}
+  m_SizeDelta: {x: 646.9, y: 353.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &832195820
 MonoBehaviour:
@@ -32614,7 +32614,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 52.1}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &928355179
@@ -37852,7 +37852,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Oootra m\xE1s"
+  m_text: Otra vez
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
@@ -48634,7 +48634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Salimos va
+  m_text: Salir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
@@ -63606,7 +63606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644100423}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.60480714, y: -0.21903498, z: 0.69991446, w: -0.3104058}
+  m_LocalRotation: {x: 0.6048072, y: -0.219035, z: 0.6999145, w: -0.31040576}
   m_LocalPosition: {x: -0.4064201, y: -0.30732557, z: 79.65485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -73692,12 +73692,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2023516674}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 298228435}
+  m_Father: {fileID: 832195819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

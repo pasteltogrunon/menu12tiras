@@ -6,7 +6,7 @@ public class ElectricFloor : MonoBehaviour
 {
 
     public float speedMultiplier = 0.5f;
-    public float hoffset = 0.05f;
+    public float hoffset = 0.1f;
     public int uResolution = 10;
     public int vResolution = 3;
     public Material material;

@@ -11,9 +11,9 @@ public class ObstacleGenerator : MonoBehaviour
     private int currentLevel;
     private static readonly Dictionary<int, float> TIME_LEVELS = new()
     {
-        {1, 30},
+        {1, 60},
         {2, 150},
-        {3, 270},
+        {3, 300},
         {4, -1}
     };
 

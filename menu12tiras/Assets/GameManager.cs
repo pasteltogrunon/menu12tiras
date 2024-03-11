@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject coin;
     public GameObject wall;
     public GameObject slidingBar;
+    public GameObject electricField;
     public bool debug = false;
 
     public Player Player;
@@ -67,6 +68,9 @@ public class GameManager : MonoBehaviour
                 mobiusStrip = mobiusStripTwisted;
                 break;
         }
+        electricField = new();
+        electricField.AddComponent<ElectricFloor>();
+
     }
 
     // Start is called before the first frame update

@@ -9,7 +9,7 @@ public class ObstacleGenerator : MonoBehaviour
     public float ustep = 0.1f;
     private List<ObstacleSection> obstacleSections;
     private int currentLevel;
-    private static Dictionary<int, float> TIME_LEVELS = new()
+    private static readonly Dictionary<int, float> TIME_LEVELS = new()
     {
         {1, 30},
         {2, 150},
@@ -94,6 +94,11 @@ public class ObstacleGenerator : MonoBehaviour
                 case '-':
                     obstacle = Instantiate(GameManager.instance.slidingBar);
                     obstacle.GetComponent<Obstacle>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
+                    row.Add(obstacle);
+                    break;
+                case 'e':
+                    obstacle = Instantiate(GameManager.instance.electricField);
+                    obstacle.GetComponent<ElectricFloor>().Init(u + i * ustep, -1 + vstep * j, ustep, vstep, inverted);
                     row.Add(obstacle);
                     break;
                 default:

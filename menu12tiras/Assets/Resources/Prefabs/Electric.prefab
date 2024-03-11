@@ -5129,6 +5129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedMultiplier: 0.3
-  hoffset: 0.1
+  hoffset: 0.01
   source: {fileID: 1076450786724379643}
   FX: {fileID: 4521342804677454145}

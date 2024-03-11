@@ -50,7 +50,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private Sprite[] dieSprites = new Sprite[6];
+    [SerializeField] private Sprite[] dieFaces = new Sprite[6];
     [SerializeField] private ParticleSystem throwDieParticles;
+
+    public bool Invincible;
+    [SerializeField] private AudioSource invincibleSource;
+    [SerializeField] private GameObject invinciSphere;
+
     private bool cervecezed;
     public Volume cervezedPostProcess;
 
@@ -91,14 +97,18 @@ public class Player : MonoBehaviour
         get => uspeed;
         set
         {
-            mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
-            mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
-            mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
+            if(!(Invincible && value < uspeed))
+            {
+                mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
+                mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
+                mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
 
-            speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
-            transform.GetChild(0).GetComponent<Animator>().speed = 1 + 0.1f * uspeed;
+                speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
+                transform.GetChild(0).GetComponent<Animator>().speed = 1 + 0.1f * uspeed;
 
-            uspeed = Mathf.Clamp(value, 0, maxFSpeed);
+                uspeed = Mathf.Clamp(value, 0, maxFSpeed);
+
+            }
         }
     }
 
@@ -233,10 +243,12 @@ public class Player : MonoBehaviour
         dieSource.PlayOneShot(dieThrow);
         yield return new WaitForSeconds(0.5f);
         int number = Die.throwDie(this) - 1;
+        renderer.gameObject.SetActive(true);
+        renderer.sprite = dieFaces[number];
+        throwDieParticles.Play();
+        yield return new WaitForSeconds(0.5f);
         dieSource.PlayOneShot(dieClips[number]);
         renderer.sprite = dieSprites[number];
-        renderer.gameObject.SetActive(true);
-        throwDieParticles.Play();
         yield return new WaitForSeconds(1f);
         renderer.gameObject.SetActive(false);
 
@@ -261,4 +273,22 @@ public class Player : MonoBehaviour
         cervecezed = false;
     }
 
+
+    public void Invinivilize(float time)
+    {
+        StartCoroutine(inviciCooldown(time));
+    }
+
+    IEnumerator inviciCooldown(float time)
+    {
+        invincibleSource.Play();
+        mixer.SetFloat("NormalVolume", -80);
+        mixer.SetFloat("CervezedVolume", -80);
+        invinciSphere.SetActive(true);
+        Invincible = true;
+        yield return new WaitForSeconds(time);
+        invinciSphere.SetActive(false);
+        mixer.SetFloat("NormalVolume", 0);
+        Invincible = false;
+    }
 }

@@ -6,7 +6,7 @@ public class Die
 {
     public static int throwDie(Player player)
     {
-        int number = Random.Range(1, 6);
+        int number = Random.Range(1, 7);
 
         switch(number)
         {
@@ -26,6 +26,7 @@ public class Die
                 player.USpeed *= 1.4f;
                 break;
             case 6:
+                player.Invinivilize(12);
                 break;
                 */
             default:

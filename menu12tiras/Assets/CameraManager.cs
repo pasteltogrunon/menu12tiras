@@ -28,7 +28,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        playerCamera.m_Lens.FieldOfView = Mathf.Clamp(80 + player.USpeed * 2.5f, 80, 105);
+        playerCamera.m_Lens.FieldOfView = Mathf.Clamp(80 + player.USpeed * 1.5626f, 80, 105);
 
         playerCameraAnimator.SetBool("PlayerInverted", player.Inverted);
 

@@ -7,11 +7,11 @@ using UnityEngine.VFX;
 public class Player : MonoBehaviour
 {
     [Header("Player Settings")]
-    [Range(0, 20)] public float maxFSpeed = 15f;
+    [Range(0, 20)] public float maxFSpeed = 16f;
     [Range(0, 10)] public float maxHSpeed = 1f;
     [Range(0, 5)] public float hacceleration = 10f;
     [Range(0, 0.3f)] public float hfriction = 0.02f;
-    [Range(0, 3f)] public float facceleration = 0.2f;
+    [Range(0, 3f)] public float facceleration = 0.4f;
 
     [Header("Speed FX")]
     public AudioMixer mixer;
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        USpeed = 1;
+        USpeed = 2;
         cervecezed = false;
         hpos = 0.1f;
         transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -191,6 +191,7 @@ public class Player : MonoBehaviour
     private void UpdateUPos()
     {
         USpeed += facceleration * Time.fixedDeltaTime;
+        Debug.Log(USpeed);
         upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 

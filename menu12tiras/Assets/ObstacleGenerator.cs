@@ -6,7 +6,16 @@ public class ObstacleGenerator : MonoBehaviour
 {
 
     public int nActiveSections = 10;
+    public float ustep = 0.1f;
     private List<ObstacleSection> obstacleSections;
+    private int currentLevel;
+    private static Dictionary<int, float> TIME_LEVELS = new()
+    {
+        {1, 30},
+        {2, 150},
+        {3, 270},
+        {4, -1}
+    };
 
     public class ObstacleSection
     {
@@ -20,12 +29,18 @@ public class ObstacleGenerator : MonoBehaviour
         {
             get => u;
         }
+        private float ustep;
+        public float UStep
+        {
+            get => ustep;
+        }
         private Tuple<List<List<char>>, List<List<char>>> configuration;
         private Tuple<List<List<GameObject>>, List<List<GameObject>>> objects = new(new List<List<GameObject>>(), new List<List<GameObject>>());
 
-        public ObstacleSection(Tuple<List<List<char>>, List<List<char>>> configuration, float u)
+        public ObstacleSection(Tuple<List<List<char>>, List<List<char>>> configuration, float u, float ustep = 0.05f)
         {
             this.u = u;
+            this.ustep = ustep;
             this.configuration = configuration;
             nrows = configuration.Item1.Count;
         }
@@ -33,7 +48,6 @@ public class ObstacleGenerator : MonoBehaviour
         public void GenerateObjects()
         {
 
-            float ustep = 0.01f;
             float vstep1, vstep2;
 
             for (int i = 0; i < nrows; i++)
@@ -62,20 +76,30 @@ public class ObstacleGenerator : MonoBehaviour
         public void InstantiateObject(List<GameObject> row, char type, float i, float j, float u, float ustep,
                                         float vstep, bool inverted = false)
         {
+            GameObject obstacle = null;
             switch (type)
             {
                 case 'o':
-                    GameObject obstacle = Instantiate(GameManager.instance.coin);
+                    obstacle = Instantiate(GameManager.instance.coin);
                     obstacle.GetComponent<Coin>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
                     row.Add(obstacle);
                     break;
                 case 'v':
-                    row.Add(null);
+                    break;
+                case 'x':
+                    obstacle = Instantiate(GameManager.instance.wall);
+                    obstacle.GetComponent<Obstacle>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
+                    row.Add(obstacle);
+                    break;
+                case '-':
+                    obstacle = Instantiate(GameManager.instance.slidingBar);
+                    obstacle.GetComponent<Obstacle>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
+                    row.Add(obstacle);
                     break;
                 default:
-                    row.Add(null);
                     break;
             }
+            row.Add(obstacle);
         }
 
         public void DestroyObjects()
@@ -101,10 +125,11 @@ public class ObstacleGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentLevel = 1;
         obstacleSections = new List<ObstacleSection>();
         for (int i = 0; i < nActiveSections; i++)
         {
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, i * 0.1f));
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetLevelConfiguration(currentLevel), (i + 1) * ustep));
         }
         foreach (ObstacleSection section in obstacleSections)
         {
@@ -115,15 +140,24 @@ public class ObstacleGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateLevel();
         float uplayer = GameObject.Find("Player").GetComponent<Player>().UPos;
-        float usection = obstacleSections[0].U + obstacleSections[0].NRows * 0.1f;
-        if (uplayer > usection)
+        float usectionFirst = obstacleSections[0].U + obstacleSections[0].NRows * obstacleSections[0].UStep;
+        float usectionLast = obstacleSections[^1].U + obstacleSections[^1].NRows * obstacleSections[^1].UStep;
+        if (uplayer > usectionFirst)
         {
-            ObstacleSection section = obstacleSections[0];
+            obstacleSections[0].DestroyObjects();
             obstacleSections.RemoveAt(0);
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, usection + 0.01f));
-            section.DestroyObjects();
-            section.GenerateObjects();
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetLevelConfiguration(currentLevel), usectionLast + ustep));
+            obstacleSections[^1].GenerateObjects();
         }
     }
+
+    void UpdateLevel()
+    {
+        if (TIME_LEVELS[currentLevel] != -1 && GameManager.instance.TotalTime > TIME_LEVELS[currentLevel])
+            currentLevel++;
+    }
+
+
 }

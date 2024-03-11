@@ -5458,7 +5458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489309537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505943, y: -0.000000014764631, z: 0.0000000020125426, w: 0.9908375}
+  m_LocalRotation: {x: 0.13505942, y: 3.2956665e-16, z: -1.5377674e-16, w: 0.9908375}
   m_LocalPosition: {x: 0, y: 0.4, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6015,7 +6015,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677624422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505943, y: -0.000000014764631, z: 0.0000000020125426, w: 0.9908375}
+  m_LocalRotation: {x: 0.13505942, y: 3.2956665e-16, z: -1.5377674e-16, w: 0.9908375}
   m_LocalPosition: {x: 0, y: 0.4, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20886,6 +20886,8 @@ MonoBehaviour:
   hspeed: 1
   hacceleration: 10
   hfriction: 0.02
+  inversionCooldown: 4
+  lookAtFollow: {fileID: 0}
   mixer: {fileID: 24100000, guid: eccd484524492914db194316100c35a6, type: 2}
   speedLines: {fileID: 498687088}
   camera: {fileID: 489309541}

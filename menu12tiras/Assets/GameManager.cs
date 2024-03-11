@@ -19,16 +19,45 @@ public class GameManager : MonoBehaviour
     private MobiusStrip mobiusStrip;
 
     public GameObject coin;
+    public GameObject wall;
+    public GameObject slidingBar;
     public bool debug = false;
+
+    public Player Player;
+
+    [Header("Energy")]
+    [SerializeField] private float initialEnergyDecrease = 0.3f;
+    [SerializeField] private float energyDecreasePerTime = 0.05f;
+    [SerializeField] private float energyGrowthPerSpeed = 0.3f;
+    [SerializeField] private AudioSource fullEnergy;
+    private bool alreadyShouted;
+
+    public float TotalTime;
+    private float energylevel;
+
+    public float EnergyLevel
+    {
+        get => energylevel;
+        set
+        {
+            if (value < 75) alreadyShouted = false;
+            if (value >= 100 && !alreadyShouted)
+            {
+                alreadyShouted = true;
+                fullEnergy.Play();
+            }
+            energylevel = Mathf.Clamp(value, 0, 100);
+        }
+    }
+
+    public float EnergyDecrease
+    {
+        get => initialEnergyDecrease + energyDecreasePerTime * TotalTime;
+    }
 
     private void Awake()
     {
         instance = this;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         switch (mobiusStripType)
         {
             case MobiusStripType.Default:
@@ -38,32 +67,25 @@ public class GameManager : MonoBehaviour
                 mobiusStrip = mobiusStripTwisted;
                 break;
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         mobiusStrip.GenerateMobiusStrip();
-        //StartCoroutine(SpawnCoins());
+
+        EnergyLevel = 75;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
+        float delta = Time.fixedDeltaTime;
+        TotalTime += delta;
+        EnergyLevel -= EnergyDecrease * delta;
+        EnergyLevel += energyGrowthPerSpeed * Player.USpeed * delta;
     }
 
-    /* IEnumerator SpawnCoins()
-    {
-        while (true)
-        {
-            int CoinIndex = 0;
-            //int CoinIndex = Random.Range(-1, 2);
-            for (int i = 0; i < 3; i++)
-            {
-                GameObject temp = Instantiate(coin);
-                float u = GameObject.Find("Player").GetComponent<Player>().UPos + 0.3f + i * EPSILON;
-                float v = CoinIndex + (CoinIndex < 0 ? 1 : (CoinIndex > 0 ? -1 : 0)) * EPSILON * 10;
-                temp.GetComponent<Coin>().Init(u, v);
-            }
-            yield return new WaitForSeconds(4f);
-        }
-    } */
 
     public Vector3 GetMobiusStripPosition(float u, float v)
     {

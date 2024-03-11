@@ -3,160 +3,145 @@ using System.Collections.Generic;
 
 public static class ObstacleConfigurations
 {
-    /* public static List<List<List<char>>> ConfigurationsArea1 = new()
-    {
-        new List<List<char>>()
-        {
-            new() {'x', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'v'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'o'},
-            new() {'o', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'x', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'x', '-', 'x'},
-            new() {'v', 'o', 'v'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'o', 'v'},
-            new() {'x', '-', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'o', 'o', 'o', 'o'},
-            new() {'o', 'o', 'o', 'o', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'v', 'o', 'v', 'o', 'v'},
-            new() {'x', 'x', 'x', 'o', 'x', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'o', 'v', 'o', 'v', 'v'},
-            new() {'x', 'x', 'o', 'x', 'x', 'x'},
-        },
-    };
-
-    public static List<List<List<char>>> ConfigurationsArea1Inverted = new()
-    {
-        new List<List<char>>()
-        {
-            new() {'v', 'o', 'v', 'o', 'v', 'v'},
-            new() {'x', 'x', 'o', 'x', 'x', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'v', 'o', 'v', 'o', 'v'},
-            new() {'x', 'x', 'x', 'o', 'x', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'o', 'o', 'o', 'o'},
-            new() {'o', 'o', 'o', 'o', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'o', 'v'},
-            new() {'x', '-', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'x', '-', 'x'},
-            new() {'v', 'o', 'v'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'o', 'o', 'o', 'o'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'x', 'v'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'o', 'v', 'v', 'o'},
-            new() {'x', 'o', 'o', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'v', 'o', 'v', 'v', 'v'},
-            new() {'x', 'x', '-', 'x', 'x', 'x'},
-        },
-
-        new List<List<char>>()
-        {
-            new() {'v', 'v', 'o', 'v', 'v', 'v'},
-            new() {'x', 'x', 'x', '-', 'x', 'x'},
-        },
-    }; */
-
 
     private static readonly List<Tuple<List<List<char>>, List<List<char>>>> ConfigurationsLevel1 = new()
     {
         new(
             new List<List<char>>()
             {
-                new() {'x', 'x'},
-                new() {'x'},
-                new() {'v'},
-                new() {'v'}
+                new() {'o', 'o', 'o'},
+                new() {'o', 'o', 'o'},
+                new() {'o', 'x', 'o'},
             },
             new List<List<char>>()
             {
-                new() {'o'},
-                new() {'o'},
-                new() {'o'},
-                new() {'o'},
+                new() {'o', 'o', 'o'},
+                new() {'o', 'x', 'o'},
+                new() {'x', 'o', 'x'},
             }
         ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'o', 'x', 'o'},
+                new() {'o', 'o', 'o'},
+            },
+            new List<List<char>>()
+            {
+                new() {'x', 'o', 'x', 'o'},
+                new() {'o', 'o', 'o', 'o'},
+                new() {'v'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'x', 'o'},
+                new() {'o', 'x', 'o'},
+                new() {'o', 'x', 'o'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'x', '-', 'x'},
+                new() {'o', 'o', 'o'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'o', 'x', 'o'},
+                new() {'x', 'o', 'x'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'x', 'o'},
+                new() {'x', 'o', 'x'},
+                new() {'o', 'o', 'o'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'x', '-', 'x'},
+                new() {'o', 'o', 'o'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'x', 'o'},
+                new() {'o', 'x', 'o'},
+                new() {'o', 'x', 'o'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'x', 'o', 'x', 'o'},
+                new() {'o', 'o', 'o', 'o'},
+                new() {'v'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'o', 'o', 'o'},
+                new() {'o', 'x', 'o'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'x', 'x', 'o', 'x', 'x', 'x'},
+                new() {'v', 'o', 'v', 'o', 'v', 'v'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o', 'o', 'o'},
+                new() {'o', 'o', 'o', 'o', 'o'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o', 'o', 'o'},
+                new() {'o', 'o', 'o', 'o', 'o'},
+            },
+            new List<List<char>>()
+            {
+                new() {'x', 'x', 'o', 'x', 'x', 'x'},
+                new() {'v', 'o', 'v', 'o', 'v', 'v'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'x', 'o'},
+                new() {'x', 'o', 'x'},
+                new() {'o', 'x', 'o'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'o', 'x', 'o'},
+                new() {'o', 'o', 'o'},
+            }
+        ),
+        new(
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'x', 'o', 'x'},
+                new() {'o', 'o', 'o'},
+            },
+            new List<List<char>>()
+            {
+                new() {'o', 'o', 'o'},
+                new() {'x', 'o', 'o'},
+                new() {'o', 'o', 'x'},
+            }
+        )
     };
 
     private static readonly List<Tuple<List<List<char>>, List<List<char>>>> ConfigurationsLevel2 = new()

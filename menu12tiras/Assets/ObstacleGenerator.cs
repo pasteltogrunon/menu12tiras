@@ -128,8 +128,27 @@ public class ObstacleGenerator : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
+        currentLevel = 1;
+        obstacleSections = new List<ObstacleSection>();
+        for (int i = 0; i < nActiveSections; i++)
+        {
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetLevelConfiguration(currentLevel), (i + 1) * ustep));
+        }
+        foreach (ObstacleSection section in obstacleSections)
+        {
+            section.GenerateObjects();
+        }
+    }
+
+    public void Restart()
+    {
+        foreach (ObstacleSection os in obstacleSections)
+        {
+            os.DestroyObjects();
+        }
+        
         currentLevel = 1;
         obstacleSections = new List<ObstacleSection>();
         for (int i = 0; i < nActiveSections; i++)

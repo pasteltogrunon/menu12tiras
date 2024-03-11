@@ -106,8 +106,8 @@ public class Player : MonoBehaviour
         set
         {
             coins = value;
-            
-            if(value >= 10)
+
+            if (value >= 10)
             {
                 coins = value - 10;
 
@@ -191,7 +191,6 @@ public class Player : MonoBehaviour
     private void UpdateUPos()
     {
         USpeed += facceleration * Time.fixedDeltaTime;
-        Debug.Log(USpeed);
         upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 
@@ -221,7 +220,7 @@ public class Player : MonoBehaviour
     {
         dieSource.PlayOneShot(dieThrow);
         yield return new WaitForSeconds(0.5f);
-        dieSource.PlayOneShot(dieClips[Die.throwDie(this)-1]);
+        dieSource.PlayOneShot(dieClips[Die.throwDie(this) - 1]);
     }
 
     public void Cervez(float time)

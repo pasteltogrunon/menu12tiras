@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         set
         {
             if (value < 75) alreadyShouted = false;
-            if(value >= 100 && !alreadyShouted)
+            if (value >= 100 && !alreadyShouted)
             {
                 alreadyShouted = true;
                 fullEnergy.Play();
@@ -58,11 +58,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         switch (mobiusStripType)
         {
             case MobiusStripType.Default:
@@ -72,6 +67,11 @@ public class GameManager : MonoBehaviour
                 mobiusStrip = mobiusStripTwisted;
                 break;
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         mobiusStrip.GenerateMobiusStrip();
 
         EnergyLevel = 75;

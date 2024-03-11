@@ -185,13 +185,13 @@ public class Player : MonoBehaviour
 
     private void CheckCrouchState()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             hpos = 0.05f;
             transform.localScale -= new Vector3(0, 0.05f, 0);
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             hpos = 0.1f;
             transform.localScale += new Vector3(0, 0.05f, 0);

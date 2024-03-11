@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 300d03e2d92c9804cbf19710c9668665
+  - enabled: 0
+    path: Assets/Scenes/CameraTest3.unity
+    guid: e8371e6943317704eb1267390d778ce0
+  - enabled: 0
+    path: Assets/Scenes/ArtTest4.unity
+    guid: 1fe9c5cff9f1fa4499e34ad5fbe858c5
   - enabled: 1
     path: Assets/Scenes/MenuTest.unity
     guid: a4ee1d78c0a6ae24ca54aaa233308268

@@ -28,12 +28,14 @@ public class Coin : MonoBehaviour
         // check if player touches coin
         if (other.gameObject.name != "Player")
         {
+            source.pitch = 0.5f + 0.1f * other.GetComponent<Player>().Coins;
             return;
         }
 
         // score
         GameObject.Find("Player").GetComponent<Player>().Coins++;
 
+       
         source.Play();
         transform.GetChild(0).GetComponent<Renderer>().enabled = false;
         transform.GetComponent<Collider>().enabled = false;

@@ -26,7 +26,7 @@ public class Die
                 player.USpeed *= 1.4f;
                 break;
             case 6:
-                player.Invinivilize(12);
+                player.Invinivilize(11);
                 break;
                 
             default:

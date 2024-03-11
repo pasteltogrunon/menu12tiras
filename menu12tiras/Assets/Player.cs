@@ -11,7 +11,10 @@ public class Player : MonoBehaviour
     [Range(0, 10)] public float maxHSpeed = 1f;
     [Range(0, 5)] public float hacceleration = 10f;
     [Range(0, 0.3f)] public float hfriction = 0.02f;
-    [Range(0, 3f)] public float facceleration = 0.4f;
+    [Range(0, 3f)] public float fhighAcceleration = 0.4f;
+    [Range(0, 3f)] public float flowAcceleration = 0.05f;
+    [Range(0, 20)] public float speedOfChange = 12f;
+
 
     [Header("Speed FX")]
     public AudioMixer mixer;
@@ -190,7 +193,7 @@ public class Player : MonoBehaviour
 
     private void UpdateUPos()
     {
-        USpeed += facceleration * Time.fixedDeltaTime;
+        USpeed += (USpeed < speedOfChange ? fhighAcceleration : flowAcceleration) * Time.fixedDeltaTime;
         upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 

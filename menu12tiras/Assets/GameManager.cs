@@ -79,6 +79,8 @@ public class GameManager : MonoBehaviour
     {
         mobiusStrip.GenerateMobiusStrip();
 
+        TotalTime = 0f;
+        
         energy = 80.5f;
         deltaEnergy = 0f;
         v0min = 6f;

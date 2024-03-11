@@ -95,7 +95,6 @@ public abstract class MobiusStrip
         bound.transform.position = Vector3.zero;
         bound.GetComponent<MeshFilter>().mesh = mesh;
         bound.GetComponent<MeshRenderer>().material = wallMaterial;
-        bound.GetComponent<MeshRenderer>().material.color = Color.green;
 
         List<Vector3> vertices = new();
         List<Vector2> uv = new();

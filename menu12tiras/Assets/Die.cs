@@ -10,14 +10,14 @@ public class Die
 
         switch(number)
         {
-            case 1:
+            /*case 1:
                 player.Cervez(10);
                 break;
             case 2:
                 player.USpeed *= 0.6f;
                 break;
             case 3:
-                GameManager.instance.EnergyLevel += 10;
+                GameManager.instance.Energy += 10;
                 break;
             case 4:
                 player.Coins += 5;
@@ -28,8 +28,9 @@ public class Die
             case 6:
                 player.Invinivilize(12);
                 break;
+                */
             default:
-                break;
+                player.USpeed *= 1.4f;break;
         }
 
         return number;

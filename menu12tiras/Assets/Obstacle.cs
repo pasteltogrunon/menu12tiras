@@ -4,7 +4,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
 
-    public float speedMultiplier = 0.5f;
+    private float speedMultiplier = 0.5f;
     public float hoffset = 0.5f;
     public AudioSource source;
     [SerializeField] private ParticleSystem FX;

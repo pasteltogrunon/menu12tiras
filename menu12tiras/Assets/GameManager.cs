@@ -23,14 +23,14 @@ public class GameManager : MonoBehaviour
     public GameObject slidingBar;
     public bool debug = false;
 
-    [SerializeField] private Player player;
+    public Player Player;
 
     [Header("Energy")]
     [SerializeField] private float initialEnergyDecrease = 0.3f;
     [SerializeField] private float energyDecreasePerTime = 0.05f;
     [SerializeField] private float energyGrowthPerSpeed = 0.3f;
 
-    private float totalTime;
+    public float TotalTime;
     private float energylevel;
 
     public float EnergyLevel
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     public float EnergyDecrease
     {
-        get => initialEnergyDecrease + energyDecreasePerTime * totalTime;
+        get => initialEnergyDecrease + energyDecreasePerTime * TotalTime;
     }
 
     private void Awake()
@@ -72,9 +72,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        totalTime += Time.fixedDeltaTime;
-        EnergyLevel -= EnergyDecrease;
-        EnergyLevel += energyGrowthPerSpeed * player.USpeed;
+        float delta = Time.fixedDeltaTime;
+        TotalTime += delta;
+        EnergyLevel -= EnergyDecrease * delta;
+        EnergyLevel += energyGrowthPerSpeed * Player.USpeed * delta;
     }
 
 

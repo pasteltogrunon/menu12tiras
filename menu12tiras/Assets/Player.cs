@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 using UnityEngine.VFX;
 
 [System.Serializable]
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     private float uspeed;
     private float vspeed;
     private int coins;
+
     [Header("Inversion")]
     [SerializeField] private AudioSource inversionSource;
     [SerializeField] private ParticleSystem inversionVFX;
@@ -45,7 +47,13 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource dieSource;
     [SerializeField] private AudioClip dieThrow;
     [SerializeField] private AudioClip[] dieClips = new AudioClip[6];
+
+    [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] private Sprite[] dieSprites = new Sprite[6];
+    [SerializeField] private ParticleSystem throwDieParticles;
     private bool cervecezed;
+    public Volume cervezedPostProcess;
+
 
     public float UPos
     {
@@ -109,8 +117,8 @@ public class Player : MonoBehaviour
         set
         {
             coins = value;
-            
-            if(value >= 10)
+
+            if (value >= 10)
             {
                 coins = value - 10;
 
@@ -194,7 +202,6 @@ public class Player : MonoBehaviour
     private void UpdateUPos()
     {
         USpeed += (USpeed < speedOfChange ? fhighAcceleration : flowAcceleration) * Time.fixedDeltaTime;
-        Debug.Log(USpeed);
         upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 
@@ -220,27 +227,38 @@ public class Player : MonoBehaviour
         }
     }
 
+
     IEnumerator throwDies()
     {
         dieSource.PlayOneShot(dieThrow);
         yield return new WaitForSeconds(0.5f);
-        dieSource.PlayOneShot(dieClips[Die.throwDie(this)-1]);
+        int number = Die.throwDie(this) - 1;
+        dieSource.PlayOneShot(dieClips[number]);
+        renderer.sprite = dieSprites[number];
+        renderer.gameObject.SetActive(true);
+        throwDieParticles.Play();
+        yield return new WaitForSeconds(1f);
+        renderer.gameObject.SetActive(false);
+
     }
 
     public void Cervez(float time)
     {
-        cervecezed = true;
-        mixer.SetFloat("NormalVolume", -80);
-        mixer.SetFloat("CervezedVolume", 0);
         StartCoroutine(cervezCooldown(time));
     }
 
 
     IEnumerator cervezCooldown(float time)
     {
+        cervecezed = true;
+        mixer.SetFloat("NormalVolume", -80);
+        mixer.SetFloat("CervezedVolume", 0);
+        cervezedPostProcess.weight = 1;
         yield return new WaitForSeconds(time);
         mixer.SetFloat("NormalVolume", 0);
         mixer.SetFloat("CervezedVolume", -80);
+        cervezedPostProcess.weight = 0;
         cervecezed = false;
     }
+
 }

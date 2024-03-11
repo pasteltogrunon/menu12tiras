@@ -14,13 +14,18 @@ public class Die
                 player.Cervez(10);
                 break;
             case 2:
-                player.USpeed *= 0.4f;
+                player.USpeed *= 0.6f;
                 break;
             case 3:
-                GameManager.instance.Energy += 5;
+                GameManager.instance.Energy += 10;
                 break;
             case 4:
-                player.USpeed *= 1.3f;
+                player.Coins += 5;
+                break;
+            case 5:
+                player.USpeed *= 1.4f;
+                break;
+            case 6:
                 break;
             default:
                 break;

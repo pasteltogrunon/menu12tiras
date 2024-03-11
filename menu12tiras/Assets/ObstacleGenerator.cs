@@ -8,6 +8,14 @@ public class ObstacleGenerator : MonoBehaviour
     public int nActiveSections = 10;
     public float ustep = 0.1f;
     private List<ObstacleSection> obstacleSections;
+    private int currentLevel;
+    private static readonly Dictionary<int, float> TIME_LEVELS = new()
+    {
+        {1, 30},
+        {2, 150},
+        {3, 270},
+        {4, -1}
+    };
 
     public class ObstacleSection
     {
@@ -88,6 +96,11 @@ public class ObstacleGenerator : MonoBehaviour
                     obstacle.GetComponent<Obstacle>().Init(u + i * ustep, -1 + vstep * (j + 0.5f), inverted);
                     row.Add(obstacle);
                     break;
+                case 'e':
+                    obstacle = Instantiate(GameManager.instance.electricField);
+                    obstacle.GetComponent<ElectricFloor>().Init(u + i * ustep, -1 + vstep * j, ustep, vstep, inverted);
+                    row.Add(obstacle);
+                    break;
                 default:
                     break;
             }
@@ -117,10 +130,11 @@ public class ObstacleGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentLevel = 1;
         obstacleSections = new List<ObstacleSection>();
         for (int i = 0; i < nActiveSections; i++)
         {
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetArea1Configuration(), (i + 1) * ustep));
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetLevelConfiguration(currentLevel), (i + 1) * ustep));
         }
         foreach (ObstacleSection section in obstacleSections)
         {
@@ -131,21 +145,24 @@ public class ObstacleGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateLevel();
         float uplayer = GameObject.Find("Player").GetComponent<Player>().UPos;
         float usectionFirst = obstacleSections[0].U + obstacleSections[0].NRows * obstacleSections[0].UStep;
         float usectionLast = obstacleSections[^1].U + obstacleSections[^1].NRows * obstacleSections[^1].UStep;
-        for (int i = 0; i < obstacleSections.Count; i++)
-        {
-            //Debug.Log("Section " + i + " u: " + obstacleSections[i].U);
-        }
-        //Debug.Log("uplayer: " + uplayer + " usectionFirst: " + usectionFirst + " usectionLast: " + usectionLast);
         if (uplayer > usectionFirst)
         {
-            //Debug.Log("Destroying first section");
             obstacleSections[0].DestroyObjects();
             obstacleSections.RemoveAt(0);
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetArea1Configuration(), usectionLast + ustep));
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetLevelConfiguration(currentLevel), usectionLast + ustep));
             obstacleSections[^1].GenerateObjects();
         }
     }
+
+    void UpdateLevel()
+    {
+        if (TIME_LEVELS[currentLevel] != -1 && GameManager.instance.TotalTime > TIME_LEVELS[currentLevel])
+            currentLevel++;
+    }
+
+
 }

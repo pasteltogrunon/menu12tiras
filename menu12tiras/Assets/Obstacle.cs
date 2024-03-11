@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
@@ -12,7 +13,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            other.GetComponent<Player>().USpeed *= speedMultiplier;
+            other.GetComponent<Player>().USpeed = Mathf.Clamp(other.GetComponent<Player>().USpeed * speedMultiplier, 2f, 4f);
         }
 
         source.Play();

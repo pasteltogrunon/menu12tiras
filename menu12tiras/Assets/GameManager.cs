@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         mobiusStrip.GenerateMobiusStrip();
 
-        energy = 80f;
+        energy = 80.5f;
         deltaEnergy = 0f;
         v0min = 6f;
         v0max = 6.6f;
@@ -95,10 +95,8 @@ public class GameManager : MonoBehaviour
         if (TotalTime >= 8)
         {
             UpdateDeltaEnergy();
-            //energy = Mathf.Clamp(energy + deltaEnergy * Time.fixedDeltaTime, 0, 100);
             Energy += deltaEnergy * Time.fixedDeltaTime;
             //if (energy <= 0) gameOver();
-            Debug.Log(Energy);
         }
     }
 
@@ -119,7 +117,6 @@ public class GameManager : MonoBehaviour
         }
 
         else deltaEnergy = 0;
-        Debug.Log(deltaEnergy);
     }
 
     public Vector3 GetMobiusStripPosition(float u, float v)

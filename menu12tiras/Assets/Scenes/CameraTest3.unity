@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0072222156, g: 0.003984335, b: 0.031084137, a: 1}
+  m_IndirectSpecularColor: {r: 0.0072445776, g: 0.0039790194, b: 0.031042967, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11131,7 +11131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489309537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6048072, y: -0.219035, z: 0.6999145, w: -0.31040576}
+  m_LocalRotation: {x: 0.60480714, y: -0.21903498, z: 0.69991446, w: -0.3104058}
   m_LocalPosition: {x: -0.4064201, y: -0.30732557, z: 79.65485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11487,7 +11487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562187480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6048072, y: -0.219035, z: 0.6999145, w: -0.31040576}
+  m_LocalRotation: {x: 0.60480714, y: -0.21903498, z: 0.69991446, w: -0.3104058}
   m_LocalPosition: {x: -0.4064201, y: -0.30732557, z: 79.65485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11912,11 +11912,12 @@ MonoBehaviour:
   wall: {fileID: 4614054821489259927, guid: 66eb134ee4a614a44b896054a4e85721, type: 3}
   slidingBar: {fileID: 4614054821489259927, guid: dfa51c646623f9b4885ad8ee1ba882d4,
     type: 3}
+  electricField: {fileID: 0}
   debug: 0
-  Player: {fileID: 1767614192}
-  initialEnergyDecrease: 0.1
-  energyDecreasePerTime: 0.0001
-  energyGrowthPerSpeed: 2
+  player: {fileID: 1767614192}
+  maxEnergyDecrease: 41
+  maxEnergyIncrease: 12
+  energy: 80.5
   fullEnergy: {fileID: 1143348839}
   TotalTime: 0
 --- !u!4 &732849027
@@ -37376,7 +37377,9 @@ MonoBehaviour:
   maxHSpeed: 1
   hacceleration: 1
   hfriction: 0.02
-  facceleration: 0.4
+  fhighAcceleration: 0.4
+  flowAcceleration: 0.05
+  speedOfChange: 12
   mixer: {fileID: 24100000, guid: eccd484524492914db194316100c35a6, type: 2}
   speedLines: {fileID: 498687088}
   camera: {fileID: 489309541}
@@ -37393,6 +37396,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb670cb8229d07046aa2f8070f14e0e8, type: 3}
   - {fileID: 8300000, guid: 3cbb2c3579c311b43996e6514cd44aa3, type: 3}
   - {fileID: 8300000, guid: bb670cb8229d07046aa2f8070f14e0e8, type: 3}
+  renderer: {fileID: 0}
+  dieSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  throwDieParticles: {fileID: 0}
+  cervezedPostProcess: {fileID: 0}
 --- !u!136 &1767614193
 CapsuleCollider:
   m_ObjectHideFlags: 0

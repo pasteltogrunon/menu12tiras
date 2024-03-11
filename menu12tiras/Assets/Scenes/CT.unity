@@ -11912,11 +11912,12 @@ MonoBehaviour:
   wall: {fileID: 4614054821489259927, guid: 66eb134ee4a614a44b896054a4e85721, type: 3}
   slidingBar: {fileID: 4614054821489259927, guid: dfa51c646623f9b4885ad8ee1ba882d4,
     type: 3}
+  electricField: {fileID: 0}
   debug: 0
   player: {fileID: 1767614192}
   maxEnergyDecrease: 41
   maxEnergyIncrease: 12
-  energy: 100
+  energy: 80.5
   fullEnergy: {fileID: 1143348839}
   TotalTime: 0
 --- !u!4 &732849027
@@ -37395,6 +37396,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb670cb8229d07046aa2f8070f14e0e8, type: 3}
   - {fileID: 8300000, guid: 3cbb2c3579c311b43996e6514cd44aa3, type: 3}
   - {fileID: 8300000, guid: bb670cb8229d07046aa2f8070f14e0e8, type: 3}
+  renderer: {fileID: 0}
+  dieSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  throwDieParticles: {fileID: 0}
+  cervezedPostProcess: {fileID: 0}
 --- !u!136 &1767614193
 CapsuleCollider:
   m_ObjectHideFlags: 0

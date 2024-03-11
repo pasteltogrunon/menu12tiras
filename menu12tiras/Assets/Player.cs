@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 using UnityEngine.VFX;
 
 [System.Serializable]
@@ -22,6 +23,38 @@ public class Player : MonoBehaviour
     private float vspeed;
 
     private int coins;
+<<<<<<< Updated upstream
+=======
+    [Header("Inversion")]
+    [SerializeField] private AudioSource inversionSource;
+    [SerializeField] private ParticleSystem inversionVFX;
+
+    [Header("Die")]
+    [SerializeField] private AudioSource dieSource;
+    [SerializeField] private AudioClip dieThrow;
+    [SerializeField] private AudioClip[] dieClips = new AudioClip[6];
+    [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] private Sprite[] dieSprites = new Sprite[6];
+    [SerializeField] private ParticleSystem throwDieParticles;
+    private bool cervecezed;
+    public Volume cervezedPostProcess;
+
+    public float UPos
+    {
+        get => upos;
+        set => upos = value;
+    }
+    public float VPos
+    {
+        get => vpos;
+        set => vpos = value;
+    }
+    public float HPos
+    {
+        get => hpos;
+        set => hpos = value;
+    }
+>>>>>>> Stashed changes
 
     public float UPos { get; set; }
     public float VPos { get; set; }
@@ -151,4 +184,38 @@ public class Player : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    IEnumerator throwDies()
+    {
+        dieSource.PlayOneShot(dieThrow);
+        yield return new WaitForSeconds(0.5f);
+        int number = Die.throwDie(this) - 1;
+        dieSource.PlayOneShot(dieClips[number]);
+        renderer.sprite = dieSprites[number];
+        renderer.gameObject.SetActive(true);
+        throwDieParticles.Play();
+        yield return new WaitForSeconds(1f);
+        renderer.gameObject.SetActive(false);
+    }
+
+    public void Cervez(float time)
+    {
+        StartCoroutine(cervezCooldown(time));
+    }
+
+
+    IEnumerator cervezCooldown(float time)
+    {
+        cervecezed = true;
+        mixer.SetFloat("NormalVolume", -80);
+        mixer.SetFloat("CervezedVolume", 0);
+        cervezedPostProcess.weight = 1;
+        yield return new WaitForSeconds(time);
+        mixer.SetFloat("NormalVolume", 0);
+        mixer.SetFloat("CervezedVolume", -80);
+        cervezedPostProcess.weight = 0;
+        cervecezed = false;
+    }
+>>>>>>> Stashed changes
 }

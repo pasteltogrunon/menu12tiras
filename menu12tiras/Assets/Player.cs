@@ -137,12 +137,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Start()
     {
         USpeed = 2;
         cervecezed = false;
         hpos = 0.1f;
         transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        coins = 0;
     }
 
     private void Update()

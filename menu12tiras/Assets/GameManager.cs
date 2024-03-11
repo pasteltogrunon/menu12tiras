@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public bool debug = false;
 
     public Player player;
+    public PauseMenu pauseMenu;
 
     [Header("Energy")]
     [SerializeField] private float maxEnergyDecrease = 41f;
@@ -89,6 +90,16 @@ public class GameManager : MonoBehaviour
         cInc = (-1) * Mathf.PI / (2 * (v0max - player.speedOfChange));
     }
 
+    public void Restart()
+    {
+        TotalTime = 0f;
+        
+        energy = 80.5f;
+        deltaEnergy = 0f;
+        v0min = 6f;
+        v0max = 6.6f;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -98,7 +109,7 @@ public class GameManager : MonoBehaviour
         {
             UpdateDeltaEnergy();
             Energy += deltaEnergy * Time.fixedDeltaTime;
-            //if (energy <= 0) gameOver();
+            if (Energy <= 0 && !pauseMenu.GameFinished) pauseMenu.GameOver();
         }
     }
 

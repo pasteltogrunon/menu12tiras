@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
     [Header("Parameters")]
     public Player player;
 
-    void Start()
+    public void Start()
     {
         fov = 80;
         followOffsetY = 0.4f;

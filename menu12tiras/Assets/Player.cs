@@ -6,10 +6,11 @@ using UnityEngine.VFX;
 public class Player : MonoBehaviour
 {
     [Header("Player Settings")]
-    [Range(0, 10)] public float fspeed = 1f;
-    [Range(0, 10)] public float hspeed = 1f;
-    [Range(0, 15)] public float hacceleration = 10f;
+    [Range(0, 20)] public float maxFSpeed = 15f;
+    [Range(0, 10)] public float maxHSpeed = 1f;
+    [Range(0, 5)] public float hacceleration = 10f;
     [Range(0, 0.3f)] public float hfriction = 0.02f;
+    [Range(0, 3f)] public float facceleration = 0.2f;
 
     [Header("Speed FX")]
     public AudioMixer mixer;
@@ -75,7 +76,7 @@ public class Player : MonoBehaviour
 
             speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
 
-            uspeed = value;
+            uspeed = Mathf.Clamp(value, 0, maxFSpeed);
         }
     }
 
@@ -84,7 +85,7 @@ public class Player : MonoBehaviour
         get => vspeed;
         set
         {
-            vspeed = Mathf.Clamp(value, -hspeed * 0.2f * fspeed, hspeed * 0.2f * fspeed);
+            vspeed = Mathf.Clamp(value, -maxHSpeed * 0.2f * maxFSpeed, maxHSpeed * 0.2f * maxFSpeed);
         }
     }
 
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        USpeed = 1;
         hpos = 0.1f;
         transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
@@ -169,15 +171,14 @@ public class Player : MonoBehaviour
 
     private void UpdateUPos()
     {
-        if (Input.GetKey(KeyCode.W)) USpeed += 3 * Time.fixedDeltaTime;
-        if (Input.GetKey(KeyCode.S)) USpeed -= 3 * Time.fixedDeltaTime;
+        USpeed += facceleration * Time.fixedDeltaTime;
         upos += Time.fixedDeltaTime * uspeed / GameManager.instance.GetMobiusStripRadius();
     }
 
     private void UpdateVPos()
     {
         float hAxis = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
-        vspeed += hAxis * Time.fixedDeltaTime * hacceleration * fspeed;
+        vspeed += hAxis * Time.fixedDeltaTime * hacceleration * uspeed;
         if (hAxis == 0)
         {
             vspeed *= 1 - hfriction;
@@ -187,11 +188,11 @@ public class Player : MonoBehaviour
 
         if (vpos == -1 + EPSILON)
         {
-            vspeed = Mathf.Clamp(vspeed, 0, hspeed);
+            vspeed = Mathf.Clamp(vspeed, 0, maxHSpeed);
         }
         else if (vpos == 1 - EPSILON)
         {
-            vspeed = Mathf.Clamp(vspeed, -hspeed, 0);
+            vspeed = Mathf.Clamp(vspeed, -maxHSpeed, 0);
         }
     }
 

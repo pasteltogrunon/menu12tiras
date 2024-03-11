@@ -5,6 +5,8 @@ public class Obstacle : MonoBehaviour
 
     public float speedMultiplier = 0.5f;
     public float hoffset = 0.5f;
+    public AudioSource source;
+    [SerializeField] private ParticleSystem FX;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +15,13 @@ public class Obstacle : MonoBehaviour
             other.GetComponent<Player>().USpeed *= speedMultiplier;
         }
 
-        Destroy(gameObject);
+        source.Play();
+        transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+        transform.GetComponent<Collider>().enabled = false;
+        FX.Play();
+        FX.transform.SetParent(null);
+        Destroy(FX.gameObject, 4f);
+        Destroy(gameObject, 4f);
     }
 
     private float u, v;

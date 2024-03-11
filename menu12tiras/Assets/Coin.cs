@@ -12,6 +12,9 @@ public class Coin : MonoBehaviour
     public Material activeCoinMaterial;
     public Material inactiveCoinMaterial;
 
+    public AudioSource source;
+    public ParticleSystem FX;
+
     public float U { get; set; }
     public float V { get; set; }
     public bool Inverted
@@ -31,8 +34,13 @@ public class Coin : MonoBehaviour
         // score
         GameObject.Find("Player").GetComponent<Player>().Coins++;
 
-        // destroy coin
-        Destroy(gameObject);
+        source.Play();
+        transform.GetChild(0).GetComponent<Renderer>().enabled = false;
+        transform.GetComponent<Collider>().enabled = false;
+        FX.Play();
+        FX.transform.SetParent(null);
+        Destroy(FX.gameObject, 4f);
+        Destroy(gameObject, 4f);
     }
 
     private void Start()

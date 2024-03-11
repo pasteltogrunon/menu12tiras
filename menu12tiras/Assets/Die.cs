@@ -17,7 +17,7 @@ public class Die
                 player.USpeed *= 0.4f;
                 break;
             case 3:
-                GameManager.instance.EnergyLevel += 5;
+                GameManager.instance.Energy += 5;
                 break;
             case 4:
                 player.USpeed *= 1.3f;

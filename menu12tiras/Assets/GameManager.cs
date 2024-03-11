@@ -23,21 +23,20 @@ public class GameManager : MonoBehaviour
     public GameObject slidingBar;
     public bool debug = false;
 
-    public Player Player;
+    public Player player;
 
     [Header("Energy")]
-    [SerializeField] private float initialEnergyDecrease = 0.3f;
-    [SerializeField] private float energyDecreasePerTime = 0.05f;
-    [SerializeField] private float energyGrowthPerSpeed = 0.3f;
+    [SerializeField] private float maxEnergyDecrease = 41f;
+    [SerializeField] private float maxEnergyIncrease = 12f;
+    private float deltaEnergy;
+
+    [SerializeField] private float energy;
     [SerializeField] private AudioSource fullEnergy;
     private bool alreadyShouted;
 
-    public float TotalTime;
-    private float energylevel;
-
-    public float EnergyLevel
+    public float Energy
     {
-        get => energylevel;
+        get => energy;
         set
         {
             if (value < 75) alreadyShouted = false;
@@ -46,14 +45,16 @@ public class GameManager : MonoBehaviour
                 alreadyShouted = true;
                 fullEnergy.Play();
             }
-            energylevel = Mathf.Clamp(value, 0, 100);
+            energy = Mathf.Clamp(value, 0, 100);
         }
     }
 
-    public float EnergyDecrease
-    {
-        get => initialEnergyDecrease + energyDecreasePerTime * TotalTime;
-    }
+    private float v0min;
+    private float v0max;
+    private float cDec;
+    private float cInc;
+
+    public float TotalTime;
 
     private void Awake()
     {
@@ -74,18 +75,48 @@ public class GameManager : MonoBehaviour
         }
         mobiusStrip.GenerateMobiusStrip();
 
-        EnergyLevel = 75;
+        energy = 80f;
+        deltaEnergy = 0f;
+        v0min = 6f;
+        v0max = 6.6f;
+        cDec = Mathf.PI / (2 * (v0min - 4f));
+        cInc = (-1) * Mathf.PI / (2 * (v0max - player.speedOfChange));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float delta = Time.fixedDeltaTime;
-        TotalTime += delta;
-        EnergyLevel -= EnergyDecrease * delta;
-        EnergyLevel += energyGrowthPerSpeed * Player.USpeed * delta;
+        TotalTime += Time.fixedDeltaTime;
+
+        if (TotalTime >= 8)
+        {
+            UpdateDeltaEnergy();
+            //energy = Mathf.Clamp(energy + deltaEnergy * Time.fixedDeltaTime, 0, 100);
+            Energy += deltaEnergy * Time.fixedDeltaTime;
+            //if (energy <= 0) gameOver();
+            Debug.Log(Energy);
+        }
     }
 
+    private void UpdateDeltaEnergy()
+    {
+        float playerVelocity = player.USpeed;
+
+        if (playerVelocity < 4f) deltaEnergy = -maxEnergyDecrease;
+        else if (player.speedOfChange < playerVelocity) deltaEnergy = maxEnergyIncrease;
+
+        else if (playerVelocity < v0min)
+        {
+            deltaEnergy = Mathf.Clamp( ( maxEnergyDecrease * Mathf.Sin( cDec * (playerVelocity - 4f) ) ) - maxEnergyDecrease, -maxEnergyDecrease, maxEnergyIncrease);
+        }
+        else if (v0max < playerVelocity )
+        {
+            deltaEnergy = Mathf.Clamp( ( maxEnergyIncrease * Mathf.Sin( cInc * (playerVelocity - player.speedOfChange) ) ) + maxEnergyIncrease, -maxEnergyDecrease, maxEnergyIncrease);
+        }
+
+        else deltaEnergy = 0;
+        Debug.Log(deltaEnergy);
+    }
 
     public Vector3 GetMobiusStripPosition(float u, float v)
     {

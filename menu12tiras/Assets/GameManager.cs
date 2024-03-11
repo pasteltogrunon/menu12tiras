@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float initialEnergyDecrease = 0.3f;
     [SerializeField] private float energyDecreasePerTime = 0.05f;
     [SerializeField] private float energyGrowthPerSpeed = 0.3f;
+    [SerializeField] private AudioSource fullEnergy;
+    private bool alreadyShouted;
 
     public float TotalTime;
     private float energylevel;
@@ -38,6 +40,12 @@ public class GameManager : MonoBehaviour
         get => energylevel;
         set
         {
+            if (value < 75) alreadyShouted = false;
+            if(value >= 100 && !alreadyShouted)
+            {
+                alreadyShouted = true;
+                fullEnergy.Play();
+            }
             energylevel = Mathf.Clamp(value, 0, 100);
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.VFX;
@@ -33,6 +34,15 @@ public class Player : MonoBehaviour
     private float uspeed;
     private float vspeed;
     private int coins;
+    [Header("Inversion")]
+    [SerializeField] private AudioSource inversionSource;
+    [SerializeField] private ParticleSystem inversionVFX;
+
+    [Header("Die")]
+    [SerializeField] private AudioSource dieSource;
+    [SerializeField] private AudioClip dieThrow;
+    [SerializeField] private AudioClip[] dieClips = new AudioClip[6];
+    private bool cervecezed;
 
     public float UPos
     {
@@ -75,6 +85,7 @@ public class Player : MonoBehaviour
             mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
 
             speedLines.SetFloat("SpawnRate", Mathf.Clamp(8 * uspeed, 0, 100));
+            transform.GetChild(0).GetComponent<Animator>().speed = 1 + 0.1f * uspeed;
 
             uspeed = Mathf.Clamp(value, 0, maxFSpeed);
         }
@@ -95,13 +106,20 @@ public class Player : MonoBehaviour
         set
         {
             coins = value;
-            Debug.Log("Coins: " + coins);
+            
+            if(value >= 10)
+            {
+                coins = value - 10;
+
+                StartCoroutine(throwDies());
+            }
         }
     }
 
     private void Start()
     {
         USpeed = 1;
+        cervecezed = false;
         hpos = 0.1f;
         transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
@@ -134,7 +152,8 @@ public class Player : MonoBehaviour
             if (!inversionOnCooldown)
             {
                 inverted = !inverted;
-
+                inversionSource.Play();
+                inversionVFX.Play();
                 inversionOnCooldown = true;
                 nextInversion = inversionCooldown;
             }
@@ -178,6 +197,7 @@ public class Player : MonoBehaviour
     private void UpdateVPos()
     {
         float hAxis = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
+        hAxis *= (cervecezed ? -1 : 1);
         vspeed += hAxis * Time.fixedDeltaTime * hacceleration * uspeed;
         if (hAxis == 0)
         {
@@ -196,4 +216,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator throwDies()
+    {
+        dieSource.PlayOneShot(dieThrow);
+        yield return new WaitForSeconds(0.5f);
+        dieSource.PlayOneShot(dieClips[Die.throwDie(this)-1]);
+    }
+
+    public void Cervez(float time)
+    {
+        cervecezed = true;
+        mixer.SetFloat("NormalVolume", -80);
+        mixer.SetFloat("CervezedVolume", 0);
+        StartCoroutine(cervezCooldown(time));
+    }
+
+
+    IEnumerator cervezCooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        mixer.SetFloat("NormalVolume", 0);
+        mixer.SetFloat("CervezedVolume", -80);
+        cervecezed = false;
+    }
 }

@@ -136,12 +136,12 @@ public class ObstacleGenerator : MonoBehaviour
         float usectionLast = obstacleSections[^1].U + obstacleSections[^1].NRows * obstacleSections[^1].UStep;
         for (int i = 0; i < obstacleSections.Count; i++)
         {
-            Debug.Log("Section " + i + " u: " + obstacleSections[i].U);
+            //Debug.Log("Section " + i + " u: " + obstacleSections[i].U);
         }
-        Debug.Log("uplayer: " + uplayer + " usectionFirst: " + usectionFirst + " usectionLast: " + usectionLast);
+        //Debug.Log("uplayer: " + uplayer + " usectionFirst: " + usectionFirst + " usectionLast: " + usectionLast);
         if (uplayer > usectionFirst)
         {
-            Debug.Log("Destroying first section");
+            //Debug.Log("Destroying first section");
             obstacleSections[0].DestroyObjects();
             obstacleSections.RemoveAt(0);
             obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetArea1Configuration(), usectionLast + ustep));

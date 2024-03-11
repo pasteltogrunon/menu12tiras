@@ -701,6 +701,9 @@ MonoBehaviour:
     hResolution: 5
     separation: 20
   coin: {fileID: 8621012421368379915, guid: cd5a4d5ebe475d84f881f499a231f61d, type: 3}
+  wall: {fileID: 4614054821489259927, guid: 66eb134ee4a614a44b896054a4e85721, type: 3}
+  slidingBar: {fileID: 4614054821489259927, guid: dfa51c646623f9b4885ad8ee1ba882d4,
+    type: 3}
   debug: 0
 --- !u!4 &516727617
 Transform:
@@ -998,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nActiveSections: 10
-  ustep: 0.5
+  ustep: 0.1
 --- !u!4 &754325823
 Transform:
   m_ObjectHideFlags: 0
@@ -6166,6 +6169,8 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: eccd484524492914db194316100c35a6, type: 2}
   speedLines: {fileID: 843074681}
   camera: {fileID: 0}
+  inversionCooldown: 4
+  lookAtFollow: {fileID: 0}
 --- !u!136 &1767614193
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class ObstacleGenerator : MonoBehaviour
         private Tuple<List<List<char>>, List<List<char>>> configuration;
         private Tuple<List<List<GameObject>>, List<List<GameObject>>> objects = new(new List<List<GameObject>>(), new List<List<GameObject>>());
 
-        public ObstacleSection(Tuple<List<List<char>>, List<List<char>>> configuration, float u, float ustep = 0.01f)
+        public ObstacleSection(Tuple<List<List<char>>, List<List<char>>> configuration, float u, float ustep = 0.05f)
         {
             this.u = u;
             this.ustep = ustep;
@@ -120,7 +120,7 @@ public class ObstacleGenerator : MonoBehaviour
         obstacleSections = new List<ObstacleSection>();
         for (int i = 0; i < nActiveSections; i++)
         {
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, (i + 1) * ustep));
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetArea1Configuration(), (i + 1) * ustep));
         }
         foreach (ObstacleSection section in obstacleSections)
         {
@@ -144,7 +144,7 @@ public class ObstacleGenerator : MonoBehaviour
             Debug.Log("Destroying first section");
             obstacleSections[0].DestroyObjects();
             obstacleSections.RemoveAt(0);
-            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.Configuration0, usectionLast + ustep));
+            obstacleSections.Add(new ObstacleSection(ObstacleConfigurations.GetArea1Configuration(), usectionLast + ustep));
             obstacleSections[^1].GenerateObjects();
         }
     }

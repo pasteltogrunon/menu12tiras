@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -13,6 +14,7 @@ public class PauseMenu : MonoBehaviour
         set => gameFinished = value;
     }
 
+    public GameObject GameUI;
     public GameObject pauseMenuUI;
     public GameObject gameOverUI;
 
@@ -20,6 +22,14 @@ public class PauseMenu : MonoBehaviour
     public GameManager gameMan;
     public ObstacleGenerator obsGen;
     public Player player;
+
+    public AudioMixer mixer;
+    public AudioSource pauseMusic;
+    public AudioSource pauseEnterSource;
+    public AudioClip pauseEnter;
+    public AudioClip pauseExit;
+
+    public GameObject mobiusCamera;
 
 
     void Update()
@@ -35,7 +45,14 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         gamePaused = false;
-        
+
+        mixer.SetFloat("GameMusicVolume", 0);
+        mixer.SetFloat("PauseMusicVolume", -80);
+
+        pauseMusic.Stop();
+        pauseEnterSource.PlayOneShot(pauseExit);
+
+
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -43,7 +60,12 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         gamePaused = true;
-        
+
+        mixer.SetFloat("GameMusicVolume", -80);
+        mixer.SetFloat("PauseMusicVolume", 0);
+        pauseMusic.Play();
+        pauseEnterSource.PlayOneShot(pauseEnter);
+
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -62,6 +84,14 @@ public class PauseMenu : MonoBehaviour
 
         pauseMenuUI.SetActive(false);
         gameOverUI.SetActive(true);
+        pauseMusic.Play();
+
+        mixer.SetFloat("GameMusicVolume", -80);
+        mixer.SetFloat("PauseMusicVolume", 0);
+
+        player.gameObject.SetActive(false);
+        GameUI.SetActive(false);
+        mobiusCamera.SetActive(true);
         Time.timeScale = 0f;
     }
 

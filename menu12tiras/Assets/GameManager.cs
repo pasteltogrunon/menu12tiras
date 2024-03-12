@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public Player player;
     public PauseMenu pauseMenu;
+    public AudioMixer mixer;
+    public AudioSource[] musicSources = new AudioSource[5];
 
     [Header("Energy")]
     [SerializeField] private float maxEnergyDecrease = 41f;
@@ -88,6 +91,25 @@ public class GameManager : MonoBehaviour
         v0max = 6.6f;
         cDec = Mathf.PI / (2 * (v0min - 4f));
         cInc = (-1) * Mathf.PI / (2 * (v0max - player.speedOfChange));
+
+        mixer.SetFloat("GameMusicVolume", 0);
+        mixer.SetFloat("NormalVolume", 0);
+        mixer.SetFloat("CervezedVolume", -80);
+        mixer.SetFloat("InvincibleVolume", 0);
+        mixer.SetFloat("PauseMusicVolume", -80);
+
+        foreach(AudioSource s in musicSources)
+        {
+            s.Play();
+        }
+
+        foreach (AudioSource s in musicSources)
+        {
+            s.time = 0;
+        }
+
+        StartCoroutine(syncMusic());
+
     }
 
     public void Restart()
@@ -150,5 +172,17 @@ public class GameManager : MonoBehaviour
     public float GetMobiusStripRadius()
     {
         return mobiusStrip.radius;
+    }
+
+    IEnumerator syncMusic()
+    {
+        while(true)
+        {
+            foreach (AudioSource s in musicSources)
+            {
+                s.time = musicSources[0].time;
+            }
+            yield return new WaitForSeconds(2);
+        }
     }
 }

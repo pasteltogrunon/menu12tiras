@@ -11,7 +11,7 @@ public class Hamstem : MonoBehaviour
 
     void onStep()
     {
-        source.PlayOneShot(steps[Random.Range(0, 9)]);
+        source.PlayOneShot(steps[Random.Range(0, steps.Length)]);
         whatAreYouDoingStepParticle.Play();
     }
 }

@@ -226,7 +226,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xBFQuieres salir?"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e0dab900b6a1c2488a8ca4d85aaa203, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
     type: 2}
   m_fontSharedMaterials: []
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &222859445
@@ -660,7 +660,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Si
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e0dab900b6a1c2488a8ca4d85aaa203, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
     type: 2}
   m_fontSharedMaterials: []
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &451776189
@@ -1376,7 +1376,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: No
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e0dab900b6a1c2488a8ca4d85aaa203, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
     type: 2}
   m_fontSharedMaterials: []
@@ -1441,7 +1441,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &774776823
@@ -2009,8 +2009,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Jugar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
-  m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
+  m_fontAsset: {fileID: 11400000, guid: 2e0dab900b6a1c2488a8ca4d85aaa203, type: 2}
+  m_sharedMaterial: {fileID: -6339104592582792385, guid: 2e0dab900b6a1c2488a8ca4d85aaa203,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2351,8 +2351,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Salir
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
-  m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
+  m_fontAsset: {fileID: 11400000, guid: 2e0dab900b6a1c2488a8ca4d85aaa203, type: 2}
+  m_sharedMaterial: {fileID: -6339104592582792385, guid: 2e0dab900b6a1c2488a8ca4d85aaa203,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3012,15 +3012,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "La recreativa de la estaci\xF3n espacial FULANITO 27 se ha estropeado
-    y no enciende. Para arreglarla y poder jugar, hay que suministrarle una gran
-    cantidad de energ\xEDa puesto que es tecnolog\xEDa muy avanzada . Solo un animal
-    es capaz de arreglarla (puesto que es su trabajo) : HAMPTEM EL H\xC1MSTER\r\n\r\nAs\xED
-    que Hamptem coge su casco espacial, guarda su dado de la suerte y se dispone
-    a realizar su trabajo (y conseguir unas monedas extras de paso\u2026) .\n\nClick
+  m_text: "La recreativa de la estacion espacial FULANITO 27 se ha estropeado y no
+    enciende. Para arreglarla y poder jugar, hay que suministrarle una gran cantidad
+    de energia puesto que es tecnologia muy avanzada . Solo un animal es capaz de
+    arreglarla (puesto que es su trabajo) : HAMPTEM EL HAMSTER\r.\n\r\nAs\xED que
+    Hamptem coge su casco espacial, guarda su dado de la suerte y se dispone a dar
+    vueltas en la cinta del infinito , y conseguir unas monedas extras de paso\u2026\n\nClick
     para continuar..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e607fd307ac19a54e8968b3e135e1cd6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e0dab900b6a1c2488a8ca4d85aaa203, type: 2}
   m_sharedMaterial: {fileID: -1801510883296948552, guid: e607fd307ac19a54e8968b3e135e1cd6,
     type: 2}
   m_fontSharedMaterials: []
@@ -3085,7 +3085,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: -531.8424}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &2119418398

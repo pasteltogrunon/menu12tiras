@@ -53,7 +53,7 @@ public class Coin : MonoBehaviour
     private void Update()
     {
         transform.GetChild(0).Rotate(GameManager.instance.GetMobiusStripNormal(u, v), rotationSpeed * Time.deltaTime);
-        if (inverted == GameObject.Find("Player").GetComponent<Player>().Inverted)
+        if (inverted == GameManager.instance.player.Inverted)
             transform.GetChild(0).GetComponent<MeshRenderer>().material = activeCoinMaterial;
         else
         {

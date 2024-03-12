@@ -165,7 +165,7 @@ public class ObstacleGenerator : MonoBehaviour
     void Update()
     {
         UpdateLevel();
-        float uplayer = GameObject.Find("Player").GetComponent<Player>().UPos;
+        float uplayer = GameManager.instance.player.UPos;
         float usectionFirst = obstacleSections[0].U + obstacleSections[0].NRows * obstacleSections[0].UStep;
         float usectionLast = obstacleSections[^1].U + obstacleSections[^1].NRows * obstacleSections[^1].UStep;
         if (uplayer > usectionFirst)

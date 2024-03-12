@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [Range(0, 20)] public float maxFSpeed = 16f;
     [Range(0, 10)] public float maxHSpeed = 1f;
     [Range(0, 5)] public float hacceleration = 10f;
+    [Range(0, 1)] public float speedPow = 0.5f;
+    [Range(0, 5)] public float negativeMultiplier = 3;
     [Range(0, 0.3f)] public float hfriction = 0.02f;
     [Range(0, 3f)] public float fhighAcceleration = 0.4f;
     [Range(0, 3f)] public float flowAcceleration = 0.05f;
@@ -54,9 +56,11 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem throwDieParticles;
 
     public bool Invincible;
+    private float invincibleTime;
     [SerializeField] private AudioSource invincibleSource;
     [SerializeField] private GameObject invinciSphere;
 
+    private float cervezedTime;
     private bool cervecezed;
     public Volume cervezedPostProcess;
 
@@ -185,13 +189,13 @@ public class Player : MonoBehaviour
 
     private void CheckCrouchState()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             hpos = 0.05f;
             transform.localScale -= new Vector3(0, 0.05f, 0);
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.S))
         {
             hpos = 0.1f;
             transform.localScale += new Vector3(0, 0.05f, 0);
@@ -221,7 +225,10 @@ public class Player : MonoBehaviour
     {
         float hAxis = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
         hAxis *= (cervecezed ? -1 : 1);
-        vspeed += hAxis * Time.fixedDeltaTime * hacceleration * uspeed;
+        if (hAxis * vspeed < 0)
+            hAxis *= negativeMultiplier;
+
+        vspeed += hAxis * Time.fixedDeltaTime * hacceleration * Mathf.Pow(uspeed, speedPow);
         if (hAxis == 0)
         {
             vspeed *= 1 - hfriction;
@@ -236,6 +243,10 @@ public class Player : MonoBehaviour
         else if (vpos == 1 - EPSILON)
         {
             vspeed = Mathf.Clamp(vspeed, -maxHSpeed, 0);
+        }
+        else
+        {
+            vspeed = Mathf.Clamp(vspeed, -maxHSpeed, maxHSpeed);
         }
     }
 
@@ -258,18 +269,31 @@ public class Player : MonoBehaviour
 
     public void Cervez(float time)
     {
-        StartCoroutine(cervezCooldown(time));
+        if (cervezedTime > 0)
+        {
+            cervezedTime = Mathf.Max(time, invincibleTime);
+        }
+        else
+        {
+            cervezedTime = Mathf.Max(time, invincibleTime);
+            StartCoroutine(startCervez());
+        }
     }
 
 
-    IEnumerator cervezCooldown(float time)
+    IEnumerator startCervez()
     {
         cervecezed = true;
         mixer.SetFloat("NormalVolume", -80);
         mixer.SetFloat("CervezedVolume", 0);
         cervezedPostProcess.weight = 1;
-        yield return new WaitForSeconds(time);
-        mixer.SetFloat("NormalVolume", 0);
+        while (cervezedTime > 0)
+        {
+            cervezedTime -= Time.deltaTime;
+            yield return null;
+        }
+        if(!Invincible)
+            mixer.SetFloat("NormalVolume", 0);
         mixer.SetFloat("CervezedVolume", -80);
         cervezedPostProcess.weight = 0;
         cervecezed = false;
@@ -278,19 +302,39 @@ public class Player : MonoBehaviour
 
     public void Invinivilize(float time)
     {
-        StartCoroutine(inviciCooldown(time));
+        if(invincibleTime > 0)
+        {
+            invincibleSource.Play();
+            invincibleTime = Mathf.Max(time, invincibleTime);
+        }
+        else
+        {
+            invincibleSource.Play();
+            invincibleTime = Mathf.Max(time, invincibleTime);
+            StartCoroutine(startInvincibility());
+        }
     }
 
-    IEnumerator inviciCooldown(float time)
+    IEnumerator startInvincibility()
     {
-        invincibleSource.Play();
+        Invincible = true;
         mixer.SetFloat("NormalVolume", -80);
         mixer.SetFloat("CervezedVolume", -80);
         invinciSphere.SetActive(true);
-        Invincible = true;
-        yield return new WaitForSeconds(time);
+        while(invincibleTime > 0)
+        {
+            invincibleTime -= Time.deltaTime;
+            yield return null;
+        }
         invinciSphere.SetActive(false);
-        mixer.SetFloat("NormalVolume", 0);
+        if(cervecezed)
+        {
+            mixer.SetFloat("CervezedVolume", 0);
+        }
+        else
+        {
+            mixer.SetFloat("NormalVolume", 0);
+        }
         Invincible = false;
     }
 }

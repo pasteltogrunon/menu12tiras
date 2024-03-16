@@ -5,10 +5,18 @@ using UnityEngine;
 public class ObstacleGenerator : MonoBehaviour
 {
 
+    public static ObstacleGenerator Instance;
+
     public int nActiveSections = 10;
     public float ustep = 0.1f;
     private List<ObstacleSection> obstacleSections;
     private int currentLevel;
+
+    public static int CurrentLevel
+    {
+        get => Instance.currentLevel;
+    }
+
     private static readonly Dictionary<int, float> TIME_LEVELS = new()
     {
         {1, 60},
@@ -130,6 +138,9 @@ public class ObstacleGenerator : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        Instance = this;
+
+
         currentLevel = 1;
         obstacleSections = new List<ObstacleSection>();
         for (int i = 0; i < nActiveSections; i++)

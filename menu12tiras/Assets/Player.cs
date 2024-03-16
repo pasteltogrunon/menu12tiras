@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -103,6 +104,7 @@ public class Player : MonoBehaviour
         {
             if(!(Invincible && value < uspeed))
             {
+
                 mixer.SetFloat("Volume1", Mathf.Clamp(34 * uspeed - 80, -100, 0));
                 mixer.SetFloat("Volume2", Mathf.Clamp(17 * uspeed - 80, -100, 0));
                 mixer.SetFloat("Volume3", Mathf.Clamp(8 * uspeed - 80, -100, 0));
@@ -112,9 +114,11 @@ public class Player : MonoBehaviour
 
                 uspeed = Mathf.Clamp(value, 0, maxFSpeed);
 
+                onSpeedChanged?.Invoke(uspeed);
             }
         }
     }
+
 
     public float VSpeed
     {
@@ -132,6 +136,8 @@ public class Player : MonoBehaviour
         {
             coins = value;
 
+            onCoinsChanged?.Invoke(value);
+
             if (value >= 10)
             {
                 coins = value - 10;
@@ -140,6 +146,13 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    public static event Action<float> onSpeedChanged;
+    public static event Action<int> onCoinsChanged;
+
+    public delegate void OnPlayerInverted();
+    public static OnPlayerInverted onPLayerInverted;
+
 
     public void Start()
     {
@@ -183,6 +196,7 @@ public class Player : MonoBehaviour
                 inversionVFX.Play();
                 inversionOnCooldown = true;
                 nextInversion = inversionCooldown;
+                onPLayerInverted?.Invoke();
             }
         }
     }

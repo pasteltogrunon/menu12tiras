@@ -48,11 +48,17 @@ public class Coin : MonoBehaviour
     private void Start()
     {
         transform.localScale = new Vector3(scale, scale * yratio, scale);
+        Player.onPLayerInverted += updateMaterial;
+        updateMaterial();
     }
 
     private void Update()
     {
         transform.GetChild(0).Rotate(GameManager.instance.GetMobiusStripNormal(u, v), rotationSpeed * Time.deltaTime);
+    }
+
+    void updateMaterial()
+    {
         if (inverted == GameManager.instance.player.Inverted)
             transform.GetChild(0).GetComponent<MeshRenderer>().material = activeCoinMaterial;
         else
@@ -71,5 +77,10 @@ public class Coin : MonoBehaviour
         Vector3 lookAt = GameManager.instance.GetMobiusStripLookAt(u, v);
         Vector3 normal = GameManager.instance.GetMobiusStripNormal(u, v);
         transform.SetPositionAndRotation(position + (inverted ? -1 : 1) * 0.2f * normal, Quaternion.LookRotation(lookAt, normal));
+    }
+
+    private void OnDestroy()
+    {
+        Player.onPLayerInverted -= updateMaterial;
     }
 }

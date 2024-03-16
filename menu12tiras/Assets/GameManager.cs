@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     private float cInc;
 
     public float TotalTime;
+    public float TotalDistance;
 
     private void Awake()
     {
@@ -133,6 +134,8 @@ public class GameManager : MonoBehaviour
             Energy += deltaEnergy * Time.fixedDeltaTime;
             if (Energy <= 0 && !pauseMenu.GameFinished) pauseMenu.GameOver();
         }
+
+        TotalDistance += 4 * player.USpeed * Time.fixedDeltaTime;
     }
 
     private void UpdateDeltaEnergy()
